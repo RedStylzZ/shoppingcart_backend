@@ -19,7 +19,7 @@ public class ListController {
 
     @GetMapping
     public String helloWorld() {
-        return "Hello World";
+        return "Goodbye World";
     }
 
     @GetMapping("lists")
