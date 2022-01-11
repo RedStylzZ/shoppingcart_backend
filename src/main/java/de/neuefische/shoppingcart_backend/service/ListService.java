@@ -5,6 +5,8 @@ import de.neuefische.shoppingcart_backend.model.ShoppingList;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ListService {
@@ -22,6 +24,11 @@ public class ListService {
     }
 
     public ArrayList<Items> getItems(String shoppingList) {
-        return this.shoppingList.get(this.shoppingList.indexOf(shoppingList)).getItems();
+        return this.shoppingList
+                .stream()
+                .filter((list) -> list.getListName().equals(shoppingList))
+                .findFirst()
+                .map(ShoppingList::getItems)
+                .orElse(new ArrayList<>());
     }
 }
