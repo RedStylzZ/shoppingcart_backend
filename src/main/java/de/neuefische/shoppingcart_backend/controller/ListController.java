@@ -17,6 +17,11 @@ public class ListController {
         this.service = service;
     }
 
+    @GetMapping
+    public String helloWorld() {
+        return "Hello World";
+    }
+
     @GetMapping("lists")
     public ArrayList<ShoppingList> getLists() {
         return service.getShoppingList();
