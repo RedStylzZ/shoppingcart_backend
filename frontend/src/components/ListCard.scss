@@ -1,0 +1,15 @@
+.listCard {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 0;
+  justify-content: space-evenly;
+  width: 25rem;
+  //height: 100%;
+  background: #1c1e20;
+}
+
+i {
+  margin-bottom: .5rem;
+  font-size: 1.25rem;
+}
