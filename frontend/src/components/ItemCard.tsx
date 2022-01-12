@@ -10,7 +10,7 @@ interface ItemCardProps {
 
 export default function ItemCard(props: ItemCardProps) {
     const {item, add, remove, change} = props
-    const name = `${item[1]}x ${item[0]}`
+    const name = `${item.itemCount}x ${item.itemName}`
     return (
         <div className={"Item"}>
             <h2>{name}</h2>
@@ -47,7 +47,7 @@ export default function ItemCard(props: ItemCardProps) {
                        }}/>*/}
                 {/*Change Button*/}
                 <i className="fas fa-exchange-alt" onClick={() => {
-                    change(item[0])
+                    change(item.itemName)
                 }}/>
                 {/*<input type={"button"}
                        value={"ChangeItem"}

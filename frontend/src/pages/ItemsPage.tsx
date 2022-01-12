@@ -9,6 +9,7 @@ interface ITextInput {
     textInput: { value: string }
 }
 
+
 export default function ItemsPage(props: { controller: IItemController }) {
     const {controller} = props
     const params = useParams()
@@ -17,11 +18,15 @@ export default function ItemsPage(props: { controller: IItemController }) {
     const [items, setItems] = useState<IItems>(controller.getItems(listName))
     const [quantityState, setQuantityState] = useState<number>(1)
 
+    function instanceOfIItem(object: any): object is IItem {
+        return 'itemName' in object
+    }
+
     // : React.FormEventHandler<HTMLFormElement>
     const addItem = (event: FormEvent<HTMLFormElement> | IItem) => {
         // Jump in when button "Add" is being pressed
-        if (Array.isArray(event)) {
-            setItems(controller.addItem(listName, event[0], 1))
+        if (instanceOfIItem(event)) {
+            setItems(controller.addItem(listName, event.itemName, 1))
             // Jump in when Item is being added via form
         } else {
             event.preventDefault()
@@ -36,7 +41,7 @@ export default function ItemsPage(props: { controller: IItemController }) {
     }
 
     const removeItem = (item: IItem, wholeItem: boolean) => {
-        setItems(controller.removeItem(listName, item[0], wholeItem))
+        setItems(controller.removeItem(listName, item.itemName, wholeItem))
     }
 
     const quantityHandler = (event: ChangeEvent) => {

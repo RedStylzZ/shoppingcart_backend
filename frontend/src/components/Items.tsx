@@ -22,8 +22,8 @@ export default function Items(props: ItemsProps) {
     return (
         <>
             {
-                Object.entries(props.items!)
-                    .map((item, index) => mapItemToCards(item, index, props.add, props.remove, props.change))
+                Object.entries(props.items.items!)
+                    .map((item, index) => mapItemToCards(item[1], index, props.add, props.remove, props.change))
             }
         </>
     )

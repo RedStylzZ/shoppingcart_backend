@@ -5,7 +5,10 @@ import './ListsPage.scss'
 
 export default function ListsPage(props: { controller: IListController }) {
     const {controller} = props
-    const [lists, setLists] = useState<ILists>(controller.getLists())
+    const [lists, setLists] = useState<Promise<ILists[]>>(() => {
+        console.log("Lists")
+        return controller.getLists()
+    })
 
     const addList: FormEventHandler<HTMLFormElement> = (event) => {
         event.preventDefault()
@@ -13,7 +16,7 @@ export default function ListsPage(props: { controller: IListController }) {
         setLists(controller.addList(event.currentTarget.elements[0].value));
         // @ts-ignore
         event.currentTarget.elements[0].value = ""
-        console.log(lists)
+        console.log("Add-List: ", lists)
     }
 
     const removeList = (listName: string) => {
