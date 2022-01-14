@@ -4,7 +4,9 @@ import Lists from "../components/Lists";
 import './ListsPage.scss'
 import axios from "axios";
 
-
+interface ITextInput {
+    textInput: { value: string }
+}
 
 export default function ListsPage(props: { controller: IListController }) {
     const {controller} = props
@@ -24,8 +26,9 @@ export default function ListsPage(props: { controller: IListController }) {
 
     const addList: FormEventHandler<HTMLFormElement> = (event) => {
         event.preventDefault()
+        console.log(event)
         // @ts-ignore
-        controller.addList(event.currentTarget.elements[0].value);
+        controller.addList(setLists, event.currentTarget.elements[0].value);
         // @ts-ignore
         event.currentTarget.elements[0].value = ""
         console.log("Add-List: ", lists)
@@ -42,7 +45,7 @@ export default function ListsPage(props: { controller: IListController }) {
     return (
         <div className={"lists"}>
             <form onSubmit={addList}>
-                <input type={"text"}/>
+                <input type={"text"} id={"textInput"}/>
                 <input type={"submit"} value={"Submit"}/>
             </form>
             <div className={"Outer"}>
