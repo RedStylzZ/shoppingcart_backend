@@ -24,8 +24,8 @@ export default function ListController(): IListController {
         },
 
         addList: (setter,listName: string) => {
-            console.log(listName)
-            axios.put(`${apiURL}/lists/`, {listName: listName, items: []}).then(response => setter(response.data))
+            axios.put(`${apiURL}/lists/`, {listName: listName, items: []})
+                .then(response => setter(response.data))
         },
 
         removeList: (setter, listName: string) => {

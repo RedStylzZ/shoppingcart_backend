@@ -4,10 +4,6 @@ import axios from "axios";
 export default function ItemController(listController: IListController): IItemController {
     const re: RegExp = new RegExp(/\s/g)
 
-    // const setItems = (value: IItems, listName: string) => {
-    //     listController.setListItems(listName, value)
-    // }
-
     const isValidName = (value: string): boolean => {
         return !!(value && !re.test(value))
     }
@@ -26,7 +22,8 @@ export default function ItemController(listController: IListController): IItemCo
         },
         removeItem: (setter,listName, item, wholeItem) => {
             let temp: IItems
-            axios.delete(`/api/items/${listName}`).then((response) => temp = response.data)
+            axios.delete(`/api/items/${listName}?wholeItem=${wholeItem}`)
+                .then((response) => temp = response.data)
             return temp!
         },
         changeItem: (setter,listName, oldName, newName) => {
