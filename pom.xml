@@ -8,13 +8,16 @@
 		<version>2.6.2</version>
 	</parent>
 	<groupId>de.neuefische</groupId>
-	<artifactId>shoppingcard-parent</artifactId>
+	<artifactId>shoppingcart_parent</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>shoppingcard-parent</name>
+	<name>shoppingcart_parent</name>
 	<packaging>pom</packaging>
-	
+
 	<modules>
+		<module>frontend</module>
 		<module>backend</module>
 	</modules>
+
+
 	
 </project>
