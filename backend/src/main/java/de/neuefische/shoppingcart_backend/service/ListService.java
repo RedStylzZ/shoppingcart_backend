@@ -71,11 +71,14 @@ public class ListService {
 
     public List<Item> addItem(String list, Item newItem) {
         ShoppingList tempList = repository.findByListName(list);
+        System.out.println("New Item:" + newItem);
         List<Item> tempItems = tempList.getItems();
+
         if (tempItems.contains(newItem)) {
             tempItems.stream()
                     .filter(item -> item.equals(newItem))
-                    .forEach(item -> item.setItemCount(item.getItemCount()+1));
+                    .forEach(item ->
+                            item.setItemCount(item.getItemCount() + newItem.getItemCount()));
             tempList.setItems(tempItems);
         } else {
             tempList.getItems().add(newItem);
@@ -91,10 +94,11 @@ public class ListService {
 
         for (Item item : tempListItems) {
             if (item.getItemName().equals(itemName)) {
-                if (wholeItem) {
+                if (wholeItem || item.getItemCount() <= 1) {
                     tempListItems.remove(item);
+                    break;
                 } else {
-                    item.setItemCount(item.getItemCount()+1);
+                    item.setItemCount(item.getItemCount()-1);
                 }
             }
         }

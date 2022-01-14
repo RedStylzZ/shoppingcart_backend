@@ -1,4 +1,4 @@
-import {IItemController, IItems, IListController} from "../models/ShoppingItems";
+import {IItem, IItemController, IListController, apiURL} from "../models/ShoppingItems";
 import axios from "axios";
 
 export default function ItemController(listController: IListController): IItemController {
@@ -11,25 +11,17 @@ export default function ItemController(listController: IListController): IItemCo
     return {
         getItems: (setter, listName) => (listController.getListItems(setter, listName)),
         addItem: (setter, listName, newItem, quantity) => {
-            let temp: IItems
-            axios.post(`/api/items/${listName}`).then((response) => temp = response.data)
-            return temp!
-            /*if (isValidName(newItem)) {
-                const temp: IItems = {...listController.getListItems(listName)}
-                temp[newItem] = ((temp[newItem] ? temp[newItem] : 0) + parseInt(String(quantity)))
-                setItems(temp, listName)
-            }*/
+            const item: IItem = {itemName: newItem, itemCount: quantity}
+            axios.post(`${apiURL}/items/${listName}`, item).then(response => setter(response.data))
         },
         removeItem: (setter,listName, item, wholeItem) => {
-            let temp: IItems
-            axios.delete(`/api/items/${listName}?wholeItem=${wholeItem}`)
-                .then((response) => temp = response.data)
-            return temp!
+            console.log("Meep:", item)
+            axios.delete(`${apiURL}/items/${listName}?itemName=${item}&wholeItem=${wholeItem}`)
+                .then((response) => setter(response.data))
         },
         changeItem: (setter,listName, oldName, newName) => {
-            let temp: IItems
-            axios.post(`/api/items/${listName}`).then((response) => temp = response.data)
-            return temp!
+            axios.post(`${apiURL}/items/${listName}?oldName=${oldName}&newName=${newName}`)
+                .then((response) => setter(response.data))
             /*if (isValidName(newName) && !(newName === oldName)) {
                 const temp: IItems = {...listController.getListItems(listName)}
                 temp[newName] = temp[oldName]

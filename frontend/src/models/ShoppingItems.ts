@@ -1,6 +1,7 @@
 import React, {FormEvent} from "react";
 
 export const STORAGE_KEY: string = 'ts_shopping_cart'
+export const apiURL: string = "http://localhost:5000/api"
 // export type IItem = [string, number]
 export interface IItem {
     itemName: string,
@@ -37,14 +38,6 @@ export interface IList {
 export type IListSetter = React.Dispatch<React.SetStateAction<IList[]>>
 export type IItemSetter = React.Dispatch<React.SetStateAction<IItem[]>>
 
-
-/*export interface IListController {
-    getListItems: (list: string) => IItems,
-    setListItems: (list: string, items: IItems) => IItems,
-    getLists: (setter: ISetter) => IList[],
-    addList: (name: string) => Promise<IList[]>
-    removeList: (listName: string) => Promise<IList[]>
-}*/
 
 export interface IListController {
     getListItems: (setter: IItemSetter, listName: string) => void,

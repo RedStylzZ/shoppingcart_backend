@@ -53,8 +53,12 @@ public class ListController {
     }
 
     @DeleteMapping("items/{list}")
-    public List<Item> deleteItem(@PathVariable String list, @RequestBody String itemName, boolean wholeItem) {
-        return service.deleteItem(list, itemName, wholeItem);
+    public List<Item> deleteItem(@PathVariable String list,
+                                 @RequestParam String itemName,
+                                 @RequestParam String wholeItem) {
+        System.out.println(itemName + wholeItem);
+        boolean bWholeItem = wholeItem.equals("true") || wholeItem.equals("True");
+        return service.deleteItem(list, itemName, bWholeItem);
     }
 
 }

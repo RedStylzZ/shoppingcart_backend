@@ -1,8 +1,7 @@
-import {IItems, IItemSetter, IListController, IListSetter} from "../models/ShoppingItems";
+import {IItems, IItemSetter, IListController, IListSetter, apiURL} from "../models/ShoppingItems";
 import axios from "axios";
 
 export default function ListController(): IListController {
-    const apiURL: string = "http://localhost:5000/api"
 
     const apiGET = (setter: IListSetter | IItemSetter, url: string) => {
         axios.get(url).then(response => setter(response.data))
@@ -20,7 +19,8 @@ export default function ListController(): IListController {
         },
 
         setListItems: (setter, listName: string, items: IItems) => {
-            axios.post(`${apiURL}/items/${listName}`, items).then(response => setter(response.data))
+            axios.post(`${apiURL}/items/${listName}`, items)
+                .then(response => setter(response.data))
         },
 
         addList: (setter,listName: string) => {
