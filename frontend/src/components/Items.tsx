@@ -19,12 +19,18 @@ const mapItemToCards: (item: IItem,
     }
 
 export default function Items(props: ItemsProps) {
-    return (
-        <>
-            {
-                Object.entries(props.items.items!)
-                    .map((item, index) => mapItemToCards(item[1], index, props.add, props.remove, props.change))
-            }
-        </>
-    )
+    console.log(props.items)
+    if (props.items) {
+        return (
+            <>
+                {
+                    // Object.entries(props.items.items!)
+                    //     .map((item, index) => mapItemToCards(item[1], index, props.add, props.remove, props.change))
+                    props.items.map((item, index) =>
+                        mapItemToCards(item, index, props.add, props.remove, props.change))
+                }
+            </>
+        )
+    }
+    return null
 }

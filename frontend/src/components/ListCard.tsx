@@ -1,19 +1,20 @@
 import {Link} from "react-router-dom";
-import {IItems, ILists, removeListFunc} from "../models/ShoppingItems";
+import {IItems, IList, IListSetter, removeListFunc} from "../models/ShoppingItems";
 import './ListCard.scss'
 
-type IList = [string, IItems]
+// type IList = [string, IItems]
 
 interface IListCard {
-    list: ILists
+    list: IList
     remove: removeListFunc
 }
 
 export default function ListCard(props: IListCard) {
     const {list, remove} = props
     const name: string = list.listName
+    const id: string = list.id
     return (
-        <div className={"listCard"}>
+        <div className={"listCard"} id={id}>
             <Link to={`/lists/${name}`}>
                 <div>
                     <h1>{name}</h1>

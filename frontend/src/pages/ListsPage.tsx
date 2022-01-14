@@ -1,26 +1,42 @@
-import {IListController, ILists} from "../models/ShoppingItems";
-import {FormEventHandler, useState} from "react";
+import {IListController, IList, IListSetter} from "../models/ShoppingItems";
+import {FormEventHandler, useEffect, useState} from "react";
 import Lists from "../components/Lists";
 import './ListsPage.scss'
+import axios from "axios";
+
+
 
 export default function ListsPage(props: { controller: IListController }) {
     const {controller} = props
-    const [lists, setLists] = useState<Promise<ILists[]>>(() => {
-        console.log("Lists")
-        return controller.getLists()
-    })
+
+    // const [lists, setLists] = useState( ()  => {
+    //     console.log("Lists")
+    //     return controller.getLists()
+    // })
+
+    const [lists, setLists] = useState<IList[]>([])
+
+
+    useEffect(() => {
+        // axios.get('http://localhost:5000/api/lists').then(response => setLists(response.data));
+        controller.getLists(setLists)
+    }, [])
 
     const addList: FormEventHandler<HTMLFormElement> = (event) => {
         event.preventDefault()
         // @ts-ignore
-        setLists(controller.addList(event.currentTarget.elements[0].value));
+        controller.addList(event.currentTarget.elements[0].value);
         // @ts-ignore
         event.currentTarget.elements[0].value = ""
         console.log("Add-List: ", lists)
     }
 
-    const removeList = (listName: string) => {
-        setLists(controller.removeList(listName))
+    /*const removeList = (listName: string) => {
+        controller.removeList(setLists, listName)
+    }*/
+
+    const removeList = (setter: IListSetter) => (listName: string) => {
+        controller.removeList(setter, listName)
     }
 
     return (
@@ -30,7 +46,7 @@ export default function ListsPage(props: { controller: IListController }) {
                 <input type={"submit"} value={"Submit"}/>
             </form>
             <div className={"Outer"}>
-                <Lists lists={lists} removeList={removeList}/>
+                <Lists lists={lists} removeList={removeList(setLists)}/>
             </div>
         </div>
     )

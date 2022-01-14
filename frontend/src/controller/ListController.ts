@@ -1,10 +1,12 @@
-import {ILists, IItems, STORAGE_KEY, IListController} from "../models/ShoppingItems";
+import {IList, IItems, STORAGE_KEY, IListController} from "../models/ShoppingItems";
 import axios from "axios";
+import React from "react";
 
 export default function ListController(): IListController {
-    let listItems: ILists[] = []
+    let listItems: IList[] = []
+    const apiURL: string = "http://localhost:5000/api"
 
-    const setList = (value: ILists[]) => {
+    const setList = (value: IList[]) => {
         listItems = value
         localStorage.setItem(STORAGE_KEY, JSON.stringify(listItems))
     }
@@ -15,33 +17,22 @@ export default function ListController(): IListController {
 
     return {
         // getLists: () => ({...listItems}),
-        getLists: async () => {
-            const response = await axios.get('http://localhost:5000/api/lists')
-            listItems = response.data
-            console.log("Get-Lists-Response: ", listItems)
-            return [...listItems]
+        getLists: (setter ) => {
+            // axios.get('http://localhost:5000/api/lists').then(response => listItems = response.data)
+            axios.get(`${apiURL}/lists`).then(response => setter(response.data))
         },
-        getListItems: (listName: string) => {
-            let items: IItems
-            axios.get(`/api/items/${listName}`).then((response) => items = response.data)
-            // turtle = await apiGET(`/api/items/${listName}`)
-            return items!
+        getListItems: (setter, listName: string) => {
+            axios.get(`${apiURL}/items/${listName}`).then(response => setter(response.data))
         },
 
-        setListItems: (listName: string, items: IItems) => {
-            let temp: IItems
-            axios.post(`/api/items/${listName}`).then((response) => temp = response.data)
-            return temp!
+        setListItems: (setter, listName: string, items: IItems) => {
+            axios.post(`${apiURL}/items/${listName}`).then(response => setter(response.data))
         },
-        addList: async (listName: string) => {
-            let temp: ILists[]
-            const response = await axios.put(`/api/lists/${listName}`)
-            return [...response.data]
+        addList: (setter,listName: string) => {
+            axios.put(`${apiURL}/lists/${listName}`).then(response => setter(response.data))
         },
-        removeList: async (listName: string) => {
-            let temp: ILists[]
-            const response = await axios.delete(`/api/lists/${listName}`)
-            return [...response.data]
+        removeList: (setter, listName: string) => {
+            axios.delete(`${apiURL}/lists/${listName}`).then(response => setter(response.data))
         }
     }
 }

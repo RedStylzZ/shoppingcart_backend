@@ -4,17 +4,17 @@ import axios from "axios";
 export default function ItemController(listController: IListController): IItemController {
     const re: RegExp = new RegExp(/\s/g)
 
-    const setItems = (value: IItems, listName: string) => {
-        listController.setListItems(listName, value)
-    }
+    // const setItems = (value: IItems, listName: string) => {
+    //     listController.setListItems(listName, value)
+    // }
 
     const isValidName = (value: string): boolean => {
         return !!(value && !re.test(value))
     }
 
     return {
-        getItems: (listName): IItems => (listController.getListItems(listName)),
-        addItem: (listName, newItem, quantity): IItems => {
+        getItems: (setter, listName) => (listController.getListItems(setter, listName)),
+        addItem: (setter, listName, newItem, quantity) => {
             let temp: IItems
             axios.post(`/api/items/${listName}`).then((response) => temp = response.data)
             return temp!
@@ -24,12 +24,12 @@ export default function ItemController(listController: IListController): IItemCo
                 setItems(temp, listName)
             }*/
         },
-        removeItem: (listName, item, wholeItem): IItems => {
+        removeItem: (setter,listName, item, wholeItem) => {
             let temp: IItems
             axios.delete(`/api/items/${listName}`).then((response) => temp = response.data)
             return temp!
         },
-        changeItem: (listName, oldName, newName): IItems => {
+        changeItem: (setter,listName, oldName, newName) => {
             let temp: IItems
             axios.post(`/api/items/${listName}`).then((response) => temp = response.data)
             return temp!
