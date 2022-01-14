@@ -1,12 +1,14 @@
 package de.neuefische.shoppingcart_backend.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
-import java.util.HashMap;
-
 @Data
-public class Items {
+@NoArgsConstructor
+@AllArgsConstructor
+public class Item {
     @NonNull String itemName;
     @NonNull int itemCount;
 }

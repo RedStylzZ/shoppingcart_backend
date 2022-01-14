@@ -1,0 +1,14 @@
+#spring.data.mongodb:
+#  database: shoppingDB
+#  host: localhost
+#  port: 27017
+server.port: 5000
+
+spring:
+  data:
+    mongodb:
+      uri: mongodb+srv://tizian:zWLIZiqUynw03rJS@tizcluster.rvmul.mongodb.net/shoppingDB?retryWrites=true&w=majority
+
+
+shopping:
+  apiURL: /api

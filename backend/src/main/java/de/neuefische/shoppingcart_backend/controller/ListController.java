@@ -1,13 +1,16 @@
 package de.neuefische.shoppingcart_backend.controller;
 
+import de.neuefische.shoppingcart_backend.model.Item;
 import de.neuefische.shoppingcart_backend.model.ShoppingList;
 import de.neuefische.shoppingcart_backend.service.ListService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
+@CrossOrigin("http://localhost:3000")
 @RestController
-@RequestMapping("/api")
+@RequestMapping("${shopping.apiURL}")
 public class ListController {
 
     private final ListService service;
@@ -16,19 +19,42 @@ public class ListController {
         this.service = service;
     }
 
+//    @CrossOrigin
     @GetMapping("lists")
-    public ArrayList<ShoppingList> getLists() {
-        return service.getShoppingList();
+    public List<ShoppingList> getLists() {
+        return service.getShoppingLists();
     }
 
     @PutMapping("lists")
-    public ArrayList<ShoppingList> addShoppingList(@RequestBody ArrayList<ShoppingList> shoppingList) {
+    public List<ShoppingList> addShoppingList(@RequestBody ShoppingList shoppingList) {
         return service.addShoppingList(shoppingList);
     }
 
-//    @GetMapping("items/{list}")
-//    public Items getItems(@PathVariable String list) {
-//        return service.getItems(list);
-//    }
+    @PostMapping("lists")
+    public List<ShoppingList> updateShoppingList(@RequestBody ShoppingList shoppingList) {
+        return service.updateShoppingList(shoppingList);
+    }
+
+    @DeleteMapping("lists/{list}")
+    public List<ShoppingList> deleteShoppingList(@PathVariable String list) {
+        return service.deleteShoppingList(list);
+    }
+
+
+//    @CrossOrigin
+    @GetMapping("items/{list}")
+    public List<Item> getItems(@PathVariable String list) {
+        return service.getItems(list);
+    }
+
+    @PostMapping("items/{list}")
+    public List<Item> addItem(@PathVariable String list, @RequestBody Item item) {
+        return service.addItem(list, item);
+    }
+
+    @DeleteMapping("items/{list}")
+    public List<Item> deleteItem(@PathVariable String list, @RequestBody String itemName, boolean wholeItem) {
+        return service.deleteItem(list, itemName, wholeItem);
+    }
 
 }
