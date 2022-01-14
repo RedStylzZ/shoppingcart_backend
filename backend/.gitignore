@@ -5,6 +5,7 @@ target/
 !**/src/test/**/target/
 mvnw*
 .mvn/
+src/main/resources/static
 
 ### STS ###
 .apt_generated
