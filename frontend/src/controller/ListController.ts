@@ -9,12 +9,10 @@ export default function ListController(): IListController {
 
     return {
         getLists: (setter ) => {
-            // axios.get(`${apiURL}/lists`).then(response => setter(response.data))
             apiGET(setter, `${apiURL}/lists`)
         },
 
         getListItems: (setter, listName: string) => {
-            // axios.get(`${apiURL}/items/${listName}`).then(response => setter(response.data))
             apiGET(setter, `${apiURL}/items/${listName}`)
         },
 
@@ -29,7 +27,8 @@ export default function ListController(): IListController {
         },
 
         removeList: (setter, listName: string) => {
-            axios.delete(`${apiURL}/lists/${listName}`).then(response => setter(response.data))
+            axios.delete(`${apiURL}/lists/${listName}`)
+                .then(response => setter(response.data))
         }
     }
 }
