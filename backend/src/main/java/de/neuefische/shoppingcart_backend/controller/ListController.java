@@ -6,7 +6,6 @@ import de.neuefische.shoppingcart_backend.service.ListService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
 
 @CrossOrigin("http://localhost:3000")
 @RestController
@@ -30,9 +29,11 @@ public class ListController {
         return service.addShoppingList(shoppingList);
     }
 
-    @PostMapping("lists")
-    public List<ShoppingList> updateShoppingList(@RequestBody ShoppingList shoppingList) {
-        return service.updateShoppingList(shoppingList);
+    @PostMapping("items/{list}")
+    public List<Item> changeItem(@PathVariable String list,
+                                         @RequestParam String oldName,
+                                         @RequestParam String newName) {
+        return service.changeItem(list, oldName, newName);
     }
 
     @DeleteMapping("lists/{list}")
@@ -47,7 +48,7 @@ public class ListController {
         return service.getItems(list);
     }
 
-    @PostMapping("items/{list}")
+    @PutMapping("items/{list}")
     public List<Item> addItem(@PathVariable String list, @RequestBody Item item) {
         return service.addItem(list, item);
     }
