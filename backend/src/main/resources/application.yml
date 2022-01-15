@@ -3,7 +3,7 @@
 #  host: localhost
 #  port: 27017
 server:
-  port: ${PORT:5000}
+  port: ${PORT:8080}
 
 spring:
   data:
