@@ -1,7 +1,7 @@
 import React, {FormEvent} from "react";
 
 export const STORAGE_KEY: string = 'ts_shopping_cart'
-export const apiURL: string = "http://localhost:5000/api"
+export const apiURL: string = "http://localhost:8080/api"
 // export type IItem = [string, number]
 export interface IItem {
     itemName: string,
