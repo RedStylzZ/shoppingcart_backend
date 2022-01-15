@@ -50,15 +50,15 @@ export default function ItemsPage(props: { controller: IItemController }) {
         controller.removeItem(setter, listName, item.itemName, wholeItem)
     }
 
+    const changeItem = (itemName: string) => {
+        navigate(`/changeItem/${listName}/${itemName}`)
+    }
+
     const quantityHandler = (event: ChangeEvent) => {
         event.preventDefault()
         const re = /^[0-9]+$/g
         // @ts-ignore
         setQuantityState(re.test(event.target.value) ? event.target.value : quantityState)
-    }
-
-    const changeItem = (itemName: string) => {
-        navigate(`/changeItem/${listName}/${itemName}`)
     }
 
     return (
@@ -73,9 +73,11 @@ export default function ItemsPage(props: { controller: IItemController }) {
             </form>
             <div className={"Outer"}>
                 {/*<div className={"Inner"}>*/}
-                <Items items={items} add={addItem(setItems)} remove={removeItem(setItems)} change={changeItem}/>
+                <Items items={items} add={addItem(setItems)} remove={removeItem(setItems)}
+                       change={changeItem}/>
                 {/*</div>*/}
             </div>
         </div>
     )
 }
+
