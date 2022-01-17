@@ -1,21 +1,23 @@
-import {IItem, IItemController, IListController, apiURL} from "../models/ShoppingItems";
-import axios from "axios";
+import {
+    IItemSetter,
+    IItemController
+} from "../models/ShoppingItems";
 
-export default function ItemController(listController: IListController): IItemController {
+export default function ItemController(apiController: IItemController, setter: IItemSetter): IItemController {
+
     return {
-        getItems: (setter, listName) => listController.getListItems(setter, listName),
-        addItem: (setter, listName, newItem, quantity) => {
-            axios.put(`${apiURL}/items/${listName}`, {itemName: newItem, itemCount: quantity})
-                .then(response => setter(response.data))
+        getItems: (listName) => {
+            apiController.getItems(listName)!.then(setter)
         },
-        removeItem: (setter,listName, item, wholeItem) => {
-            console.log("ID:",item.id)
-            axios.delete(`${apiURL}/items/${listName}?itemID=${item.id}&wholeItem=${wholeItem}`)
-                .then((response) => setter(response.data))
+        addItem(listName, newItem, quantity) {
+            apiController.addItem(listName, newItem, quantity)!.then(setter)
         },
-        changeItem: (setter,listName, item, newName) => {
-            axios.post(`${apiURL}/items/${listName}?newName=${newName}`, item)
-                .then(() => console.log())
+        changeItem(listName, itemID, newName) {
+            apiController.changeItem(listName, itemID, newName)!.then(setter)
+        },
+        removeItem(listName, itemID, wholeItem) {
+            apiController.removeItem(listName, itemID, wholeItem)!.then(setter)
         }
-    };
+    }
+
 }

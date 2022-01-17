@@ -1,8 +1,6 @@
 import {Link} from "react-router-dom";
-import {IItems, IList, IListSetter, removeListFunc} from "../models/ShoppingItems";
+import {IList, removeListFunc} from "../models/ShoppingItems";
 import './ListCard.scss'
-
-// type IList = [string, IItems]
 
 interface IListCard {
     list: IList

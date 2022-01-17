@@ -19,42 +19,18 @@ export default function ItemCard(props: ItemCardProps) {
                 <i className="fas fa-plus" onClick={() => {
                     add(item)
                 }}/>
-                {/*<input type={"button"}
-                       value={"Add"}
-                       id={"add"}
-                       onClick={() => {
-                           add(item)
-                       }}/>*/}
                 {/*Remove Button*/}
                 <i className="fas fa-minus" onClick={() => {
-                    remove(item, false)
+                    remove(item.id!, false)
                 }}/>
-                {/*<input type={"button"}
-                       value={"Remove"}
-                       id={"remove"}
-                       onClick={() => {
-                           remove(item, false)
-                       }}/>*/}
                 {/*Remove All Button*/}
                 <i className="fas fa-trash-alt" onClick={() => {
-                    remove(item, true)
+                    remove(item.id!, true)
                 }}/>
-                {/*<input type={"button"}
-                       value={"Remove All"}
-                       id={"removeAll"}
-                       onClick={() => {
-                           remove(item, true)
-                       }}/>*/}
                 {/*Change Button*/}
                 <i className="fas fa-exchange-alt" onClick={() => {
-                    change(item.itemName)
+                    change(item.id!)
                 }}/>
-                {/*<input type={"button"}
-                       value={"ChangeItem"}
-                       id={"changeItem"}
-                       onClick={() => {
-                           change(item[0])
-                       }}/>*/}
             </div>
         </div>
     );

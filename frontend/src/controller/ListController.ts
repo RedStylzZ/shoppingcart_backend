@@ -1,34 +1,15 @@
-import {IItems, IItemSetter, IListController, IListSetter, apiURL} from "../models/ShoppingItems";
-import axios from "axios";
+import {IListController, IListSetter} from "../models/ShoppingItems";
 
-export default function ListController(): IListController {
-
-    const apiGET = (setter: IListSetter | IItemSetter, url: string) => {
-        axios.get(url).then(response => setter(response.data))
-    }
-
+export default function ListController(apiController: IListController, setter: IListSetter): IListController {
     return {
-        getLists: (setter ) => {
-            apiGET(setter, `${apiURL}/lists`)
+        getLists: () => {
+            apiController.getLists()!.then(setter)
         },
-
-        getListItems: (setter, listName: string) => {
-            apiGET(setter, `${apiURL}/items/${listName}`)
+        addList(listName) {
+            apiController.addList(listName)!.then(setter)
         },
-
-        setListItems: (setter, listName: string, items: IItems) => {
-            axios.post(`${apiURL}/items/${listName}`, items)
-                .then(response => setter(response.data))
-        },
-
-        addList: (setter,listName: string) => {
-            axios.put(`${apiURL}/lists/`, {listName: listName, items: []})
-                .then(response => setter(response.data))
-        },
-
-        removeList: (setter, listName: string) => {
-            axios.delete(`${apiURL}/lists/${listName}`)
-                .then(response => setter(response.data))
+        removeList(listName) {
+            apiController.removeList(listName)!.then(setter)
         }
     }
 }
