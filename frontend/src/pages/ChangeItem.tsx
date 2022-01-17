@@ -1,8 +1,8 @@
 import {useNavigate, useParams} from "react-router-dom";
 import React from "react";
-import {IItemController} from "../models/ShoppingItems";
+import {IItemController, IItemSetter} from "../models/ShoppingItems";
 
-export default function ChangeItem(props: { controller: IItemController }) {
+export default function ChangeItem(props: { controller: IItemController}) {
     const {controller} = props
     const params = useParams()
     const navigate = useNavigate()

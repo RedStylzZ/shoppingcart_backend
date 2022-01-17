@@ -4,6 +4,7 @@ import React, {FormEvent} from "react";
 export const apiURL: string = process.env.NODE_ENV === "development" ? "http://localhost:8080/api" : "/api"
 // export type IItem = [string, number]
 export interface IItem {
+    id?: string,
     itemName: string,
     itemCount: number
 }
@@ -25,8 +26,8 @@ export interface ItemsProps {
 export interface IItemController {
     getItems: (setter: IItemSetter, listName: string) => void,
     addItem: (setter: IItemSetter, listName: string, newItem: string, quantity: number) => void,
-    removeItem: (setter: IItemSetter, listName: string, item: string, count: boolean) => void,
-    changeItem: (setter: IItemSetter, listName: string, oldName: string, newName: string) => void
+    removeItem: (setter: IItemSetter, listName: string, item: IItem, wholeItem: boolean) => void,
+    changeItem: (setter: IItemSetter, listName: string, item: IItem, newName: string) => void
 }
 
 export interface IList {

@@ -47,10 +47,11 @@ export default function ItemsPage(props: { controller: IItemController }) {
     }
 
     const removeItem = (setter: IItemSetter) => (item: IItem, wholeItem: boolean) => {
-        controller.removeItem(setter, listName, item.itemName, wholeItem)
+        controller.removeItem(setter, listName, item, wholeItem)
     }
 
-    const changeItem = (itemName: string) => {
+    const changeItem = (setter: IItemSetter) => (itemName: string) => {
+        console.log("Turtle", setter)
         navigate(`/changeItem/${listName}/${itemName}`)
     }
 
@@ -74,7 +75,7 @@ export default function ItemsPage(props: { controller: IItemController }) {
             <div className={"Outer"}>
                 {/*<div className={"Inner"}>*/}
                 <Items items={items} add={addItem(setItems)} remove={removeItem(setItems)}
-                       change={changeItem}/>
+                       change={changeItem(setItems)}/>
                 {/*</div>*/}
             </div>
         </div>
