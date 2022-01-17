@@ -1,44 +1,23 @@
-import {IItemController, IItems, IListController} from "../models/ShoppingItems";
-import axios from "axios";
+import {
+    IItemSetter,
+    IItemController
+} from "../models/ShoppingItems";
 
-export default function ItemController(listController: IListController): IItemController {
-    const re: RegExp = new RegExp(/\s/g)
-
-    const setItems = (value: IItems, listName: string) => {
-        listController.setListItems(listName, value)
-    }
-
-    const isValidName = (value: string): boolean => {
-        return !!(value && !re.test(value))
-    }
+export default function ItemController(apiController: IItemController, setter: IItemSetter): IItemController {
 
     return {
-        getItems: (listName): IItems => (listController.getListItems(listName)),
-        addItem: (listName, newItem, quantity): IItems => {
-            let temp: IItems
-            axios.post(`/api/items/${listName}`).then((response) => temp = response.data)
-            return temp!
-            /*if (isValidName(newItem)) {
-                const temp: IItems = {...listController.getListItems(listName)}
-                temp[newItem] = ((temp[newItem] ? temp[newItem] : 0) + parseInt(String(quantity)))
-                setItems(temp, listName)
-            }*/
+        getItems: (listName) => {
+            apiController.getItems(listName)!.then(setter)
         },
-        removeItem: (listName, item, wholeItem): IItems => {
-            let temp: IItems
-            axios.delete(`/api/items/${listName}`).then((response) => temp = response.data)
-            return temp!
+        addItem(listName, newItem, quantity) {
+            apiController.addItem(listName, newItem, quantity)!.then(setter)
         },
-        changeItem: (listName, oldName, newName): IItems => {
-            let temp: IItems
-            axios.post(`/api/items/${listName}`).then((response) => temp = response.data)
-            return temp!
-            /*if (isValidName(newName) && !(newName === oldName)) {
-                const temp: IItems = {...listController.getListItems(listName)}
-                temp[newName] = temp[oldName]
-                delete temp[oldName]
-                setItems(temp, listName)
-            }*/
+        changeItem(listName, itemID, newName) {
+            apiController.changeItem(listName, itemID, newName)!.then(setter)
+        },
+        removeItem(listName, itemID, wholeItem) {
+            apiController.removeItem(listName, itemID, wholeItem)!.then(setter)
         }
-    };
+    }
+
 }
