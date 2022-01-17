@@ -108,17 +108,17 @@ public class ListService {
         return tempItems;
     }
 
-    public List<Item> deleteItem(String list, String itemName, boolean wholeItem) {
+    public List<Item> deleteItem(String list, String itemID, boolean wholeItem) {
         ShoppingList tempList = repository.findByListName(list);
         List<Item> tempListItems = tempList.getItems();
 
-        for (Item item : tempListItems) {
-            if (item.getItemName().equals(itemName)) {
-                if (wholeItem || item.getItemCount() <= 1) {
-                    tempListItems.remove(item);
+        for (Item tItem : tempListItems) {
+            if (tItem.getId().equals(itemID)) {
+                if (wholeItem || tItem.getItemCount() <= 1) {
+                    tempListItems.remove(tItem);
                     break;
                 } else {
-                    item.setItemCount(item.getItemCount()-1);
+                    tItem.setItemCount(tItem.getItemCount()-1);
                 }
             }
         }

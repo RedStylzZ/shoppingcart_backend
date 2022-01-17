@@ -4,13 +4,19 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import org.springframework.data.annotation.Id;
 
 import java.util.Objects;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Item {
+
+    @Id
+    String id = UUID.randomUUID().toString();
+
     @NonNull String itemName;
     @NonNull int itemCount;
 
