@@ -3,7 +3,6 @@ package de.neuefische.shoppingcart_backend.service;
 import de.neuefische.shoppingcart_backend.model.Item;
 import de.neuefische.shoppingcart_backend.model.ShoppingList;
 import de.neuefische.shoppingcart_backend.repository.IShoppingListRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -13,10 +12,13 @@ import java.util.stream.Collectors;
 @Service
 public class ListService {
 
-    @Autowired
-    IShoppingListRepository repository;
-
+    private final IShoppingListRepository repository;
     private Map<String, ShoppingList> shoppingList = new HashMap<>();
+
+    public ListService(IShoppingListRepository repository) {
+        this.repository = repository;
+    }
+
 //    private List<ShoppingList> shoppingList = new ArrayList<>();
 
     private Map<String, ShoppingList> getListsAsMap() {
@@ -59,19 +61,25 @@ public class ListService {
         return mapToList(this.shoppingList);
     }
 
-    public List<Item> changeItem(String listName, String oldItemName, String newItemName) {
-        if (!(oldItemName.isBlank() || newItemName.isBlank())) {
+    public List<Item> changeItem(String listName, String itemID, String newItemName) {
+        if (!(itemID.isBlank() || newItemName.isBlank())) {
             ShoppingList list = repository.findByListName(listName);
             List<Item> items = list.getItems();
             if (!items.isEmpty()) {
-                List<Item> changedItem = items.stream()
+                items.stream()
                         .filter(item ->
-                                item.getItemName().equals(oldItemName))
-                        .peek(item -> item.setItemName(newItemName)).toList();
-                list.setItems(changedItem);
+                                item.getId().equals(itemID))
+                        .findFirst()
+                        .ifPresentOrElse(item ->
+                                item.setItemName(newItemName), null);
+
+//                tempItem.ifPresent(item -> item.setItemName(newItemName));
+
+                list.setItems(items);
                 repository.save(list);
                 this.shoppingList.replace(list.getId(), list);
             }
+            return list.getItems();
         }
 
         Optional<ShoppingList> temp = this.shoppingList

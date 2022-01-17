@@ -18,7 +18,7 @@ public class Item {
     String id = UUID.randomUUID().toString();
 
     @NonNull String itemName;
-    @NonNull int itemCount;
+    @NonNull Integer itemCount;
 
     @Override
     public boolean equals(Object o) {

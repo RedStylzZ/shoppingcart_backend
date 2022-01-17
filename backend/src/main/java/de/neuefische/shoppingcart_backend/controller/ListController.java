@@ -29,13 +29,6 @@ public class ListController {
         return service.addShoppingList(shoppingList);
     }
 
-    @PostMapping("items/{list}")
-    public List<Item> changeItem(@PathVariable String list,
-                                         @RequestParam String oldName,
-                                         @RequestParam String newName) {
-        return service.changeItem(list, oldName, newName);
-    }
-
     @DeleteMapping("lists/{list}")
     public List<ShoppingList> deleteShoppingList(@PathVariable String list) {
         return service.deleteShoppingList(list);
@@ -60,6 +53,13 @@ public class ListController {
         System.out.println(itemID + " " + wholeItem);
 //        boolean bWholeItem = wholeItem.equals("true") || wholeItem.equals("True");
         return service.deleteItem(list, itemID, wholeItem);
+    }
+
+    @PostMapping("items/{list}")
+    public List<Item> changeItem(@PathVariable String list,
+                                 @RequestParam String itemID,
+                                 @RequestParam String newName) {
+        return service.changeItem(list, itemID, newName);
     }
 
 }
