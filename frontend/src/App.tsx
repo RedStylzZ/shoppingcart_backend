@@ -29,7 +29,7 @@ export default function App() {
             <BrowserRouter>
                 <NavBar/>
                 <Routes>
-                    <Route path={"/"} element={<ListsPage controller={listController} lists={lists}/>}/>
+                    <Route path={"*"} element={<ListsPage controller={listController} lists={lists}/>}/>
                     <Route path={"/lists/:name"} element={<ItemsPage controller={itemController} items={items}/>}/>
                     <Route path={"/changeItem/:listName/:id"} element={<ChangeItem controller={itemController}/>}/>
                 </Routes>
