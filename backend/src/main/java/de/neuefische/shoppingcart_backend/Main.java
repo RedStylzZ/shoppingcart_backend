@@ -1,21 +1,23 @@
 package de.neuefische.shoppingcart_backend;
 
-import de.neuefische.shoppingcart_backend.repository.IShoppingListRepository;
+import de.neuefische.shoppingcart_backend.model.MongoUser;
+import de.neuefische.shoppingcart_backend.repository.IMongoUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.List;
 
 
 @SpringBootApplication
 public class Main implements CommandLineRunner {
 
     @Autowired
-    IShoppingListRepository repository;
-
-    @Value("${shopping.apiURL}")
-    String api;
+    IMongoUserRepository repository;
 
     public static void main(String[] args) {
         SpringApplication.run(Main.class, args);
@@ -23,14 +25,31 @@ public class Main implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        System.out.println(api);
-//        ShoppingList test = ShoppingList.builder()
-//                .listName("Lidl")
-//                .items(List.of(new Item("Meep", 10))).build();
-//        try {
-//            repository.save(test);
-//        } catch (Exception e) {
-//            System.out.println(e);
-//        }
+        PasswordEncoder encoder = new Argon2PasswordEncoder();
+        String secure = encoder.encode("Turtle");
+        String secure2 = encoder.encode("Meep");
+        MongoUser user = MongoUser.builder()
+                .username("Tizian")
+                .password(secure)
+                .authorities(List.of(new SimpleGrantedAuthority("ADMIN")))
+                .enabled(true)
+                .accountNonExpired(true)
+                .accountNonLocked(true)
+                .credentialsNonExpired(true)
+                .build();
+        MongoUser user2 = MongoUser.builder()
+                .username("Turtle")
+                .password(secure2)
+                .authorities(List.of(new SimpleGrantedAuthority("USER")))
+                .enabled(true)
+                .accountNonExpired(true)
+                .accountNonLocked(true)
+                .credentialsNonExpired(true)
+                .build();
+        try {
+            repository.saveAll(List.of(user, user2));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

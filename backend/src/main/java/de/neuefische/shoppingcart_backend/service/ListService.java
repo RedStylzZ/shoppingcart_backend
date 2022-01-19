@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 public class ListService {
 
     private final IShoppingListRepository repository;
-    private Map<String, ShoppingList> shoppingList = new HashMap<>();
+    private final Map<String, ShoppingList> shoppingList = new HashMap<>();
 
     public ListService(IShoppingListRepository repository) {
         this.repository = repository;
@@ -36,7 +36,7 @@ public class ListService {
     }
 
     public List<ShoppingList> getShoppingLists() {
-        this.shoppingList = getListsAsMap();
+        this.shoppingList.putAll(getListsAsMap());
         return mapToList(this.shoppingList);
     }
 
