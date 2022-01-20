@@ -1,7 +1,6 @@
 package de.neuefische.shoppingcart_backend.config;
 
 import de.neuefische.shoppingcart_backend.filter.JwtAuthFilter;
-import de.neuefische.shoppingcart_backend.service.MongoUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
