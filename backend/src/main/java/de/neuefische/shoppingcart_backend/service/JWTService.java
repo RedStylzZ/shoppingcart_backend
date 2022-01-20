@@ -17,8 +17,6 @@ public class JWTService {
     private final String SECRET = "SuperSecretToken";
 
     public String createToken(MongoUser user) {
-//        Map<String, Object> claims = new HashMap<>();
-//        System.out.println(claims);
         return Jwts.builder()
                 .setClaims(new HashMap<>())
                 .setSubject(user.getUsername())
@@ -29,7 +27,8 @@ public class JWTService {
     }
 
     public Boolean validateToken(String token, String username) {
-        return (extractUsername(token).equals(username) && !isTokenExpired(token));
+        System.out.println("JWTService Token:" + token);
+        return (!token.isBlank() && extractUsername(token).equals(username) && !isTokenExpired(token));
     }
 
     public String extractUsername(String token) {
