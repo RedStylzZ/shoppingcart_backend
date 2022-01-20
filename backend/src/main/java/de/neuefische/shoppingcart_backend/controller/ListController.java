@@ -1,6 +1,5 @@
 package de.neuefische.shoppingcart_backend.controller;
 
-import de.neuefische.shoppingcart_backend.model.Item;
 import de.neuefische.shoppingcart_backend.model.ShoppingList;
 import de.neuefische.shoppingcart_backend.service.ListService;
 import org.springframework.web.bind.annotation.*;
@@ -8,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.List;
 
-@CrossOrigin("http://localhost:3000")
 @RestController
 @RequestMapping("${shopping.apiURL}/lists")
 public class ListController {
@@ -19,15 +17,14 @@ public class ListController {
         this.service = service;
     }
 
-//    @CrossOrigin
     @GetMapping()
     public List<ShoppingList> getLists(Principal principal) {
         return service.getShoppingLists(principal);
     }
 
     @PutMapping()
-    public List<ShoppingList> addShoppingList(@RequestBody ShoppingList shoppingList) {
-        return service.addShoppingList(shoppingList);
+    public List<ShoppingList> addShoppingList(Principal principal, @RequestBody ShoppingList shoppingList) {
+        return service.addShoppingList(principal, shoppingList);
     }
 
     @DeleteMapping("/{list}")
