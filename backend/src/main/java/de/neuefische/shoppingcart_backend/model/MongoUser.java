@@ -6,7 +6,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -16,9 +17,11 @@ import java.util.List;
 public class MongoUser implements UserDetails {
 
     @Id
+    String id;
+
     String username;
     String password;
-    List<GrantedAuthority> authorities;
+    Collection<? extends GrantedAuthority> authorities;
     boolean accountNonExpired;
     boolean accountNonLocked;
     boolean credentialsNonExpired;

@@ -5,6 +5,7 @@ import de.neuefische.shoppingcart_backend.model.ShoppingList;
 import de.neuefische.shoppingcart_backend.service.ListService;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @CrossOrigin("http://localhost:3000")
@@ -20,8 +21,8 @@ public class ListController {
 
 //    @CrossOrigin
     @GetMapping()
-    public List<ShoppingList> getLists() {
-        return service.getShoppingLists();
+    public List<ShoppingList> getLists(Principal principal) {
+        return service.getShoppingLists(principal);
     }
 
     @PutMapping()

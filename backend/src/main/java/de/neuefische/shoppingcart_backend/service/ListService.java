@@ -1,28 +1,35 @@
 package de.neuefische.shoppingcart_backend.service;
 
 import de.neuefische.shoppingcart_backend.model.Item;
+import de.neuefische.shoppingcart_backend.model.MongoUser;
 import de.neuefische.shoppingcart_backend.model.ShoppingList;
 import de.neuefische.shoppingcart_backend.repository.IShoppingListRepository;
+import org.apache.juli.logging.Log;
+import org.apache.juli.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
 public class ListService {
+    private final Log LOG = LogFactory.getLog(ListService.class);
 
     private final IShoppingListRepository repository;
     private final Map<String, ShoppingList> shoppingList = new HashMap<>();
+    private final MongoUserDetailsService mongoService;
 
-    public ListService(IShoppingListRepository repository) {
+    public ListService(IShoppingListRepository repository, MongoUserDetailsService mongoService) {
         this.repository = repository;
+        this.mongoService = mongoService;
     }
 
 //    private List<ShoppingList> shoppingList = new ArrayList<>();
 
-    private Map<String, ShoppingList> getListsAsMap() {
-        return repository.findAll()
+    private Map<String, ShoppingList> getListsAsMap(String id) {
+        return repository.findAllByUserID(id)
                 .stream()
                 .collect(Collectors.toMap(ShoppingList::getId, Function.identity()));
     }
@@ -35,9 +42,14 @@ public class ListService {
         return shoppingList.values().stream().toList();
     }
 
-    public List<ShoppingList> getShoppingLists() {
-        this.shoppingList.putAll(getListsAsMap());
-        return mapToList(this.shoppingList);
+    public List<ShoppingList> getShoppingLists(Principal principal) {
+        if (principal != null) {
+            LOG.info("Get Shopping Lists");
+            MongoUser user = mongoService.loadUserByUsername(principal.getName());
+            this.shoppingList.putAll(getListsAsMap(user.getId()));
+            return mapToList(this.shoppingList);
+        }
+        return null;
     }
 
     public List<ShoppingList> addShoppingList(ShoppingList shoppingList) {

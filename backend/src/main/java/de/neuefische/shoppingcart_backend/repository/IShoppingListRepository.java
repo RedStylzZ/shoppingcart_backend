@@ -9,4 +9,5 @@ public interface IShoppingListRepository extends MongoRepository<ShoppingList, S
     ShoppingList findByListName(String listName);
     ShoppingList findShoppingListById(String id);
     List<ShoppingList> findAllByListNameContains(String listName);
+    List<ShoppingList> findAllByUserID(String userID);
 }
