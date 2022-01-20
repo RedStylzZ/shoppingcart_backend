@@ -1,14 +1,10 @@
 package de.neuefische.shoppingcart_backend;
 
-import de.neuefische.shoppingcart_backend.model.MongoUser;
 import de.neuefische.shoppingcart_backend.repository.IMongoUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
@@ -25,13 +21,13 @@ public class Main implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        PasswordEncoder encoder = new Argon2PasswordEncoder();
+        /*PasswordEncoder encoder = new Argon2PasswordEncoder();
         String secure = encoder.encode("Turtle");
         String secure2 = encoder.encode("Meep");
         MongoUser user = MongoUser.builder()
                 .username("Tizian")
                 .password(secure)
-                .authorities(List.of(new SimpleGrantedAuthority("ADMIN")))
+                .authorities(List.of(new SimpleGrantedAuthority("ADMIN"), new SimpleGrantedAuthority("USER")))
                 .enabled(true)
                 .accountNonExpired(true)
                 .accountNonLocked(true)
@@ -50,6 +46,6 @@ public class Main implements CommandLineRunner {
             repository.saveAll(List.of(user, user2));
         } catch (Exception e) {
             System.out.println(e.getMessage());
-        }
+        }*/
     }
 }
