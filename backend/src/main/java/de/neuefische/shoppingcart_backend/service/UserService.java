@@ -15,7 +15,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -41,6 +41,7 @@ public class UserService {
                 final UserDetails mongoUser = mongoService.loadUserByUsername(principal.getName());
                 if (hasRole(mongoUser.getAuthorities(), MongoUserDetailsService.ROLE_ADMIN)) {
                     MongoUser newUser = MongoUser.builder()
+                            .id(UUID.randomUUID().toString())
                             .username(user.getUsername())
                             .password(new Argon2PasswordEncoder().encode(user.getPassword()))
                             .authorities(List.of(new SimpleGrantedAuthority("USER")))
@@ -51,6 +52,7 @@ public class UserService {
                             .build();
 
                     repository.save(newUser);
+                    LOG.info("Added new User: " + newUser);
                     return jwtService.createToken(newUser);
                 }
             }
