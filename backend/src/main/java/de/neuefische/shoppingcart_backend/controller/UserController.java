@@ -1,13 +1,10 @@
 package de.neuefische.shoppingcart_backend.controller;
 
 import de.neuefische.shoppingcart_backend.model.MongoUser;
-import de.neuefische.shoppingcart_backend.service.MongoUserDetailsService;
 import de.neuefische.shoppingcart_backend.service.UserService;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/user")
