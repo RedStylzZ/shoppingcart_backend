@@ -1,4 +1,4 @@
-import {IList, IListSetter, removeListFunc} from "../models/ShoppingItems";
+import {IList, removeListFunc} from "../models/ShoppingItems";
 import ListCard from "./ListCard";
 
 
@@ -17,6 +17,7 @@ import ListCard from "./ListCard";
 }*/
 
 export default function Lists(props: { lists: IList[], removeList: removeListFunc}) {
+    if (props.lists == null) return null;
     return (
         <>
             {
