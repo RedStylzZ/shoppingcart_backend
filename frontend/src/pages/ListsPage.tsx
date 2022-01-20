@@ -8,7 +8,7 @@ export default function ListsPage(props: { controller: IListController, lists: I
 
     useEffect(() => {
         controller.getLists()
-    }, [])
+    }, [controller])
 
     const addList: FormEventHandler<HTMLFormElement> = (event) => {
         event.preventDefault()
