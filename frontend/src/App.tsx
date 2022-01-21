@@ -26,7 +26,7 @@ export default function App() {
     const [token, setToken] = useState(localStorage.getItem(STORAGE_KEY) || "")
 
     useEffect(() => {
-        setToken(token)
+        localStorage.setItem(STORAGE_KEY, token)
     }, [token])
 
     const config: ITokenConfig = {
