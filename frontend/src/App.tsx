@@ -23,10 +23,10 @@ export default function App() {
     const STORAGE_KEY = "shopping_token"
     const [items, setItems] = useState<IItem[]>([])
     const [lists, setLists] = useState<IList[]>([])
-    const [token, setToken] = useState(localStorage.getItem(STORAGE_KEY) || "")
+    const [token, setToken] = useState(localStorage.getItem(STORAGE_KEY) || null)
 
     useEffect(() => {
-        localStorage.setItem(STORAGE_KEY, token)
+        localStorage.setItem(STORAGE_KEY, token!)
     }, [token])
 
     const config: ITokenConfig = {
@@ -45,10 +45,10 @@ export default function App() {
             <BrowserRouter>
                 <NavBar/>
                 <Routes>
-                    <Route path={"*"} element={<LoginPage controller={loginController} setter={setToken}/>}/>
-                    <Route path={"/lists"} element={<ListsPage controller={listController} lists={lists}/>}/>
-                    <Route path={"/lists/:name"} element={<ItemsPage controller={itemController} items={items}/>}/>
-                    <Route path={"/changeItem/:listName/:id"} element={<ChangeItem controller={itemController}/>}/>
+                    <Route path={"/"} element={<ListsPage controller={listController} lists={lists} token={token}/>}/>
+                    <Route path={"/login"} element={<LoginPage controller={loginController} setter={setToken}/>}/>
+                    <Route path={"/lists/:name"} element={<ItemsPage controller={itemController} items={items} token={token}/>}/>
+                    <Route path={"/changeItem/:listName/:id"} element={<ChangeItem controller={itemController} token={token}/>}/>
                 </Routes>
             </BrowserRouter>
         </div>
