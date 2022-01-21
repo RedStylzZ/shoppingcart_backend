@@ -26,13 +26,6 @@ export interface ItemsProps {
     change: changeItemFunc
 }
 
-/*export interface IItemAPIController {
-    getItems: (listName: string) => Promise<IItem[]>,
-    addItem: (listName: string, newItem: string, quantity: number) => Promise<IItem[]>,
-    removeItem: (listName: string, itemID: string, wholeItem: boolean) => Promise<IItem[]>,
-    changeItem: (listName: string, itemID: string, newName: string) => Promise<IItem[]>
-}*/
-
 export interface IItemController {
     getItems: (listName: string) => Promise<IItem[]> | void,
     addItem: (listName: string, newItem: string, quantity: number) => Promise<IItem[]> | void,
