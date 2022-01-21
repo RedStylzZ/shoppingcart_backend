@@ -1,4 +1,4 @@
-import {ILoginController, ITokenSetter} from "../models/ShoppingItems";
+import {ILoginController} from "../models/ShoppingItems";
 
 export default function LoginController(apiController: ILoginController): ILoginController {
     return <ILoginController>{
