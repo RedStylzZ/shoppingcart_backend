@@ -20,7 +20,7 @@ export default function ItemsPage(props: { controller: IItemController, items: I
     useEffect(() => {
         // axios.get('http://localhost:5000/api/lists').then(response => setLists(response.data));
         controller.getItems(listName)
-    }, [controller, listName])
+    }, [listName])
 
     function instanceOfIItem(object: any): object is IItem {
         return 'itemName' in object
