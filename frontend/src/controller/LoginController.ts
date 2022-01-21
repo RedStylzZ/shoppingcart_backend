@@ -1,9 +1,9 @@
 import {ILoginController} from "../models/ShoppingItems";
 
 export default function LoginController(apiController: ILoginController): ILoginController {
-    return <ILoginController>{
+    return {
         login: (username, password) => {
-            apiController.login(username, password).then(response => response)
+            return apiController.login(username, password).then(response => response)
         }
 
     }
