@@ -1,11 +1,12 @@
 import {useNavigate, useParams} from "react-router-dom";
 import React, {FormEvent} from "react";
-import {IItemController} from "../models/ShoppingItems";
+import {IItemController, IToken} from "../models/ShoppingItems";
 
-export default function ChangeItem(props: {controller: IItemController}) {
-    const {controller} = props
-    const params = useParams()
+export default function ChangeItem(props: {controller: IItemController, token: IToken }) {
+    const {controller, token} = props
     const navigate = useNavigate()
+    if (!token) navigate("/login")
+    const params = useParams()
     const itemID: string = params.id!
     const listName: string = params.listName!
 

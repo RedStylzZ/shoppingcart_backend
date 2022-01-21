@@ -1,14 +1,17 @@
-import {IList, IListController} from "../models/ShoppingItems";
+import {IList, IListController, IToken} from "../models/ShoppingItems";
 import {FormEventHandler, useEffect} from "react";
 import Lists from "../components/Lists";
 import './ListsPage.scss'
+import {useNavigate} from "react-router-dom";
 
-export default function ListsPage(props: { controller: IListController, lists: IList[] }) {
-    const {controller, lists} = props
+export default function ListsPage(props: { controller: IListController, lists: IList[], token: IToken }) {
+    const {controller, lists, token} = props
+    const navigate = useNavigate()
+    if (!token) navigate("/login")
 
     useEffect(() => {
         controller.getLists()
-    }, [controller])
+    }, [])
 
     const addList: FormEventHandler<HTMLFormElement> = (event) => {
         event.preventDefault()

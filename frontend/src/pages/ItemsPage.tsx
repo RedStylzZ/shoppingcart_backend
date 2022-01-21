@@ -1,7 +1,7 @@
 import React, {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import Items from "../components/Items";
 import './ItemsPage.scss';
-import {IItem, IItemController} from "../models/ShoppingItems";
+import {IItem, IItemController, IToken} from "../models/ShoppingItems";
 import {useNavigate, useParams} from "react-router-dom";
 
 interface ITextInput {
@@ -9,12 +9,13 @@ interface ITextInput {
     textInput: { value: string }
 }
 
-export default function ItemsPage(props: { controller: IItemController, items: IItem[] }) {
-    const {controller, items} = props
-    // const [items, setItems] = useState<IItem[]>([])
+export default function ItemsPage(props: { controller: IItemController, items: IItem[], token: IToken }) {
+    const {controller, items, token} = props
+    const navigate = useNavigate()
+    if (!token) navigate("/login")
+
     const params = useParams()
     const listName: string = params.name!
-    const navigate = useNavigate()
     const [quantityState, setQuantityState] = useState<number>(1)
 
     useEffect(() => {
