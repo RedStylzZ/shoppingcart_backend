@@ -6,7 +6,7 @@ export default function LoginAPIController(): ILoginController {
         login: (username, password) => {
             return axios.post("/auth/login",
                 {username: username, password: password})
-                .then(response => response.data!);
+                .then(response => response.data);
         }
     }
 }
