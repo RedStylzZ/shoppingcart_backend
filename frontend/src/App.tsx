@@ -45,7 +45,7 @@ export default function App() {
             <BrowserRouter>
                 <NavBar/>
                 <Routes>
-                    <Route path={"/"} element={<ListsPage controller={listController} lists={lists} token={token}/>}/>
+                    <Route path={"*"} element={<ListsPage controller={listController} lists={lists} token={token}/>}/>
                     <Route path={"/login"} element={<LoginPage controller={loginController} setter={setToken}/>}/>
                     <Route path={"/lists/:name"} element={<ItemsPage controller={itemController} items={items} token={token}/>}/>
                     <Route path={"/changeItem/:listName/:id"} element={<ChangeItem controller={itemController} token={token}/>}/>
