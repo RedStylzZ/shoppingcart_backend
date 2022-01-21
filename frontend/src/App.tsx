@@ -9,18 +9,23 @@ import {
     IItem,
     IList,
     IListController,
-    IItemController
+    IItemController, ILoginController
 } from "./models/ShoppingItems";
 import ListsPage from './pages/ListsPage';
 import ListController from "./controller/ListController";
 import ItemAPIController from "./controller/ItemAPIController";
 import ListAPIController from "./controller/ListAPIController";
+import LoginAPIController from "./controller/LoginAPIController";
+import LoginController from "./controller/LoginController";
 
 export default function App() {
     const [items, setItems] = useState<IItem[]>([])
     const [lists, setLists] = useState<IList[]>([])
+    const [token, setToken] = useState("")
     const itemAPIController: IItemController = ItemAPIController();
     const listAPIController: IListController = ListAPIController();
+    const loginAPIController: ILoginController = LoginAPIController();
+    const loginController: ILoginController = LoginController(loginAPIController)
     const itemController: IItemController = ItemController(itemAPIController, setItems)
     const listController: IListController = ListController(listAPIController, setLists)
 
