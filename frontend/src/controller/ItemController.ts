@@ -7,6 +7,7 @@ export default function ItemController(apiController: IItemController, setter: I
 
     return {
         getItems: (listName) => {
+            setter([])
             apiController.getItems(listName)!.then(setter)
         },
         addItem(listName, newItem, quantity) {
