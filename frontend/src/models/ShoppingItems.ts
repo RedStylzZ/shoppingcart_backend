@@ -10,6 +10,10 @@ export interface IItem {
     itemCount: number
 }
 
+export interface ITokenConfig {
+    headers: {'Authorization': string}
+}
+
 export type addItemsFunc = (event: FormEvent<HTMLFormElement> | IItem) => void
 export type removeItemsFunc = (itemID: string, wholeItem: boolean) => void
 export type changeItemFunc = (itemName: string) => void
