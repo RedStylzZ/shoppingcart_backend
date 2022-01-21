@@ -45,17 +45,10 @@ export interface IList {
 
 export type IListSetter = React.Dispatch<React.SetStateAction<IList[]>>
 export type IItemSetter = React.Dispatch<React.SetStateAction<IItem[]>>
-export type ITokenSetter = React.Dispatch<React.SetStateAction<string>>
+export type ITokenSetter = React.Dispatch<React.SetStateAction<string | null>>
+export type IToken = string | null
 export interface IListController {
     getLists: () => Promise<IList[]> | void
     addList: (listName: string) => Promise<IList[]> | void
     removeList: (listName: string) => Promise<IList[]> | void
 }
-
-/*export interface IListAPIController {
-    // getListItems: (listName: string) => Promise<IList[]>,
-    // setListItems: (setter: IItemSetter, listName: string, items: IItems) => void,
-    getLists: () => Promise<IList[]>,
-    addList: (listName: string) => Promise<IList[]>
-    removeList: (listName: string) => Promise<IList[]>
-}*/
