@@ -9,7 +9,7 @@ interface ITextInput {
     textInput: { value: string }
 }
 
-export default function ItemsPage(props: { controller: IItemController, items: IItem[]}) {
+export default function ItemsPage(props: { controller: IItemController, items: IItem[] }) {
     const {controller, items} = props
     const navigate = useNavigate()
 
@@ -18,7 +18,6 @@ export default function ItemsPage(props: { controller: IItemController, items: I
     const [quantityState, setQuantityState] = useState<number>(1)
 
     useEffect(() => {
-        // axios.get('http://localhost:5000/api/lists').then(response => setLists(response.data));
         controller.getItems(listName)
     }, [listName])
 
@@ -36,7 +35,6 @@ export default function ItemsPage(props: { controller: IItemController, items: I
             const form = event.currentTarget
             const formElements = form.elements as typeof form.elements & ITextInput
             const textInputValue: string = formElements.textInput.value
-            // const quantityInputValue: number = formElements.quantityInput.value as unknown as number
             textInputValue.length > 100 ?
                 alert("Maximum 100 characters allowed") :
                 controller.addItem(listName, textInputValue, quantityState)
@@ -72,10 +70,8 @@ export default function ItemsPage(props: { controller: IItemController, items: I
                 <input type={"submit"} value={"Senden"}/>
             </form>
             <div className={"Outer"}>
-                {/*<div className={"Inner"}>*/}
                 <Items items={items} add={addItem} remove={removeItem}
                        change={changeItem}/>
-                {/*</div>*/}
             </div>
         </div>
     )
