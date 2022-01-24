@@ -11,7 +11,7 @@ export const AuthContext = createContext<IAuthContext>({
     setJwt: () => {throw "Login not initialized"}
 })
 
-export default function AuthRequired({children}: {children: ReactElement<any, any>}) {
+export default function AuthProvider({children}: {children: ReactElement<any, any>}) {
 
     const [token, setToken] = useState<string>()
     const [jwtDecoded, setJwtDecoded] = useState({})
