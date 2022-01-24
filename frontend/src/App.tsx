@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import './App.scss';
 import ItemsPage from './pages/ItemsPage'
 import NavBar from './components/NavBar';
@@ -9,7 +9,7 @@ import {
     IItem,
     IList,
     IListController,
-    IItemController, ILoginController, ITokenConfig
+    IItemController, ILoginController
 } from "./models/ShoppingItems";
 import ListsPage from './pages/ListsPage';
 import ListController from "./controller/ListController";
@@ -18,23 +18,15 @@ import ListAPIController from "./controller/ListAPIController";
 import LoginAPIController from "./controller/LoginAPIController";
 import LoginController from "./controller/LoginController";
 import LoginPage from "./pages/LoginPage";
+import AuthProvider from "./context/AuthProvider";
+import RequireAuth from "./components/RequireAuth";
 
 export default function App() {
-    const STORAGE_KEY = "shopping_token"
     const [items, setItems] = useState<IItem[]>([])
     const [lists, setLists] = useState<IList[]>([])
-    const [token, setToken] = useState(localStorage.getItem(STORAGE_KEY) || null)
 
-    useEffect(() => {
-        localStorage.setItem(STORAGE_KEY, token!)
-    }, [token])
-
-    const config: ITokenConfig = {
-        headers: {'Authorization': `Bearer ${token}`}
-    }
-
-    const itemAPIController: IItemController = ItemAPIController(config);
-    const listAPIController: IListController = ListAPIController(config);
+    const itemAPIController: IItemController = ItemAPIController();
+    const listAPIController: IListController = ListAPIController();
     const loginAPIController: ILoginController = LoginAPIController();
     const loginController: ILoginController = LoginController(loginAPIController)
     const itemController: IItemController = ItemController(itemAPIController, setItems)
@@ -42,15 +34,32 @@ export default function App() {
 
     return (
         <div className="App">
-            <BrowserRouter>
-                <NavBar/>
-                <Routes>
-                    <Route path={"*"} element={<ListsPage controller={listController} lists={lists} token={token}/>}/>
-                    <Route path={"/login"} element={<LoginPage controller={loginController} setter={setToken}/>}/>
-                    <Route path={"/lists/:name"} element={<ItemsPage controller={itemController} items={items} token={token}/>}/>
-                    <Route path={"/changeItem/:listName/:id"} element={<ChangeItem controller={itemController} token={token}/>}/>
-                </Routes>
-            </BrowserRouter>
+            <AuthProvider>
+                <BrowserRouter>
+                    <NavBar/>
+                    <Routes>
+                        <Route path={"*"}
+                               element={
+                                   <RequireAuth>
+                                       <ListsPage controller={listController} lists={lists}/>
+                                   </RequireAuth>
+                               }/>
+                        <Route path={"/lists/:name"}
+                               element={
+                                   <RequireAuth>
+                                       <ItemsPage controller={itemController} items={items}/>
+                                   </RequireAuth>
+                               }/>
+                        <Route path={"/changeItem/:listName/:id"}
+                               element={
+                                   <RequireAuth>
+                                       <ChangeItem controller={itemController}/>
+                                   </RequireAuth>
+                               }/>
+                        <Route path={"/login"} element={<LoginPage controller={loginController}/>}/>
+                    </Routes>
+                </BrowserRouter>
+            </AuthProvider>
         </div>
     );
 }
