@@ -12,8 +12,8 @@ export default function LoginPage(props: { controller: ILoginController }) {
     const {controller} = props
     const navigate = useNavigate()
 
-    const [name, setName] = useState<string>()
-    const [password, setPassword] = useState<string>()
+    const [name, setName] = useState<string>("")
+    const [password, setPassword] = useState<string>("")
 
     const {setJwt} = useContext(AuthContext)
 
