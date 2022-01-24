@@ -9,13 +9,10 @@ import {
     IItem,
     IList,
     IListController,
-    IItemController, ILoginController
+    IItemController, ILoginController, TOKEN_KEY
 } from "./models/ShoppingItems";
 import ListsPage from './pages/ListsPage';
 import ListController from "./controller/ListController";
-import ItemAPIController from "./controller/ItemAPIController";
-import ListAPIController from "./controller/ListAPIController";
-import LoginAPIController from "./controller/LoginAPIController";
 import LoginController from "./controller/LoginController";
 import LoginPage from "./pages/LoginPage";
 import AuthProvider from "./context/AuthProvider";
@@ -24,17 +21,15 @@ import RequireAuth from "./components/RequireAuth";
 export default function App() {
     const [items, setItems] = useState<IItem[]>([])
     const [lists, setLists] = useState<IList[]>([])
+    const [config, setConfig] = useState({headers: {Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`}})
 
-    const itemAPIController: IItemController = ItemAPIController();
-    const listAPIController: IListController = ListAPIController();
-    const loginAPIController: ILoginController = LoginAPIController();
-    const loginController: ILoginController = LoginController(loginAPIController)
-    const itemController: IItemController = ItemController(itemAPIController, setItems)
-    const listController: IListController = ListController(listAPIController, setLists)
+    const loginController: ILoginController = LoginController()
+    const itemController: IItemController = ItemController(setItems, config)
+    const listController: IListController = ListController(setLists, config)
 
     return (
         <div className="App">
-            <AuthProvider>
+            <AuthProvider setConfig={setConfig}>
                 <BrowserRouter>
                     <NavBar/>
                     <Routes>
