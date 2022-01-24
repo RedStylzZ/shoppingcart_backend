@@ -1,6 +1,6 @@
 import React, {FormEvent} from "react";
 
-// export const STORAGE_KEY: string = "process.env.NODE_ENV"
+export const TOKEN_KEY: string = "shopping_token"
 // export const apiURL: string = process.env.NODE_ENV === "development" ? "http://localhost:8080/api" : "/api"
 
 // export type IItem = [string, number]
