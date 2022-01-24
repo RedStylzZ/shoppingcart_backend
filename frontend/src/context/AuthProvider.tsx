@@ -20,7 +20,7 @@ export default function AuthProvider({children, setConfig}: { children: ReactEle
     const [jwtDecoded, setJwtDecoded] = useState({})
 
     useEffect(() => {
-        if (token != "") {
+        if (token !== "") {
             localStorage.setItem(TOKEN_KEY, token)
         }
         setConfig({headers: {Authorization: `Bearer ${token}`}})
