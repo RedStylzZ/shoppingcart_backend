@@ -2,15 +2,10 @@ import React, {useState} from 'react';
 import './App.scss';
 import ItemsPage from './pages/ItemsPage'
 import NavBar from './components/NavBar';
-import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import ChangeItem from "./pages/ChangeItem";
 import ItemController from "./controller/ItemController";
-import {
-    IItem,
-    IList,
-    IListController,
-    IItemController, ILoginController, TOKEN_KEY
-} from "./models/ShoppingItems";
+import {IItem, IItemController, IList, IListController, ILoginController, TOKEN_KEY} from "./models/ShoppingItems";
 import ListsPage from './pages/ListsPage';
 import ListController from "./controller/ListController";
 import LoginController from "./controller/LoginController";
