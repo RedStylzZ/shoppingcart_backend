@@ -10,7 +10,6 @@ export default function ItemController(setter: IItemSetter, config?: ITokenConfi
 
     return {
         getItems: (listName) => {
-            setter([])
             apiController.getItems(listName)!.then(setter)
         },
         addItem(listName, newItem, quantity) {
