@@ -2,6 +2,7 @@ import axios from "axios";
 import {IItemController, ITokenConfig} from "../models/ShoppingItems";
 
 export default function ItemAPIController(config: ITokenConfig): IItemController {
+
     return {
         getItems: (listName) => {
             return axios.get(`/api/items/${listName}`, config)

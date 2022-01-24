@@ -5,17 +5,17 @@ export default function ListAPIController(config: ITokenConfig): IListController
 
     return {
         getLists: () => {
-            return axios.get(`/api/lists`, config)
-                .then(response => response.data).catch(console.error)
+            return axios.get(`/api/lists`, config!)
+                .then(response => response.data)
         },
 
         addList: (listName) => {
-            return axios.put(`/api/lists/`, {listName: listName, items: []}, config)
+            return axios.put(`/api/lists/`, {listName: listName, items: []}, config!)
                 .then(response => response.data).catch(console.error)
         },
 
         removeList: (listName) => {
-            return axios.delete(`/api/lists/${listName}`, config)
+            return axios.delete(`/api/lists/${listName}`, config!)
                 .then(response => response.data).catch(console.error)
         }
     }
