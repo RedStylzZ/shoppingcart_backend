@@ -4,6 +4,8 @@ import de.neuefische.shoppingcart_backend.model.MongoUser;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import org.apache.juli.logging.Log;
+import org.apache.juli.logging.LogFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -13,8 +15,8 @@ import java.util.HashMap;
 
 @Service
 public class JWTService {
-
-    private final String SECRET = "SuperSecretToken";
+    private static final Log LOG = LogFactory.getLog(JWTService.class);
+    private static final String SECRET = "SuperSecretToken";
 
     public String createToken(MongoUser user) {
         return Jwts.builder()
@@ -27,7 +29,7 @@ public class JWTService {
     }
 
     public Boolean validateToken(String token, String username) {
-        System.out.println("JWTService Token:" + token);
+        LOG.info("JWTService Token:" + token);
         return (!token.isBlank() && extractUsername(token).equals(username) && !isTokenExpired(token));
     }
 

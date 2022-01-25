@@ -19,7 +19,7 @@ import java.util.UUID;
 
 @Service
 public class UserService {
-    private final Log LOG = LogFactory.getLog(UserService.class);
+    private static final Log LOG = LogFactory.getLog(UserService.class);
 
     private final IMongoUserRepository repository;
     private final JWTService jwtService;
@@ -31,20 +31,20 @@ public class UserService {
         this.mongoService = mongoService;
     }
 
-    private boolean hasRole(Collection<? extends GrantedAuthority> authorities, String authority) {
-        return authorities.stream().anyMatch(a -> authority.equals(a.getAuthority()));
+    private boolean isAdmin(Collection<? extends GrantedAuthority> authorities) {
+        return authorities.stream().anyMatch(a -> MongoUserDetailsService.ROLE_ADMIN.equals(a.getAuthority()));
     }
 
     public String addUser(Principal principal, UserDetails user) {
         try {
             if (principal != null) {
                 final UserDetails mongoUser = mongoService.loadUserByUsername(principal.getName());
-                if (hasRole(mongoUser.getAuthorities(), MongoUserDetailsService.ROLE_ADMIN)) {
+                if (isAdmin(mongoUser.getAuthorities())) {
                     MongoUser newUser = MongoUser.builder()
                             .id(UUID.randomUUID().toString())
                             .username(user.getUsername())
                             .password(new Argon2PasswordEncoder().encode(user.getPassword()))
-                            .authorities(List.of(new SimpleGrantedAuthority("USER")))
+                            .rights(List.of("USER"))
                             .accountNonLocked(true)
                             .accountNonExpired(true)
                             .credentialsNonExpired(true)

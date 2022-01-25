@@ -54,7 +54,7 @@ export default function ItemsPage(props: { controller: IItemController, items: I
 
     const quantityHandler = (event: ChangeEvent) => {
         event.preventDefault()
-        const re = /^[0-9]+$/g
+        const re = /^\d+$/g
         // @ts-ignore
         setQuantityState(re.test(event.target.value) ? event.target.value : quantityState)
     }

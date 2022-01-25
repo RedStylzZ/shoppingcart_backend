@@ -3,6 +3,7 @@ package de.neuefische.shoppingcart_backend.service;
 import de.neuefische.shoppingcart_backend.model.Item;
 import de.neuefische.shoppingcart_backend.model.MongoUser;
 import de.neuefische.shoppingcart_backend.model.ShoppingList;
+import de.neuefische.shoppingcart_backend.model.ShoppingListDTO;
 import de.neuefische.shoppingcart_backend.repository.IShoppingListRepository;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
@@ -10,28 +11,18 @@ import org.springframework.stereotype.Service;
 
 import java.security.Principal;
 import java.util.*;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 @Service
 public class ListService {
-    private final Log LOG = LogFactory.getLog(ListService.class);
+    private static final Log LOG = LogFactory.getLog(ListService.class);
 
     private final IShoppingListRepository repository;
-    private Map<String, ShoppingList> shoppingList = new HashMap<>();
+    private final Map<String, ShoppingList> shoppingList = new HashMap<>();
     private final MongoUserDetailsService mongoService;
 
     public ListService(IShoppingListRepository repository, MongoUserDetailsService mongoService) {
         this.repository = repository;
         this.mongoService = mongoService;
-    }
-
-//    private List<ShoppingList> shoppingList = new ArrayList<>();
-
-    private Map<String, ShoppingList> getListsAsMap(String id) {
-        return repository.findAllByUserID(id)
-                .stream()
-                .collect(Collectors.toMap(ShoppingList::getId, Function.identity()));
     }
 
     private boolean isListInMap(String userID, ShoppingList shoppingList) {
@@ -50,26 +41,28 @@ public class ListService {
         if (principal != null) {
             LOG.info("Get Shopping Lists");
             MongoUser user = mongoService.loadUserByUsername(principal.getName());
-//            this.shoppingList = getListsAsMap(user.getId());
-//            return mapToList(this.shoppingList);
             return repository.findAllByUserID(user.getId());
         }
-        return null;
+        return List.of();
     }
 
-    public List<ShoppingList> addShoppingList(Principal principal, ShoppingList shoppingList) {
-        if (principal == null) return null;
+    public List<ShoppingList> addShoppingList(Principal principal, ShoppingListDTO shoppingListDTO) {
+        if (principal == null) return List.of();
+        ShoppingList localShoppingList = ShoppingList.builder()
+                .id(shoppingListDTO.getId())
+                .listName(shoppingListDTO.getListName())
+                .items(shoppingListDTO.getItems())
+                .userID(shoppingListDTO.getUserID())
+                .build();
 
         MongoUser user = mongoService.loadUserByUsername(principal.getName());
-        if (!shoppingList.getListName().isBlank()) {
-            if (!isListInMap(user.getId(), shoppingList)) {
-                shoppingList.setUserID(user.getId());
-                shoppingList.setId(UUID.randomUUID().toString());
-                repository.save(shoppingList);
-                System.out.println("Added List");
-                this.shoppingList.put(shoppingList.getId(), shoppingList);
+        if (!localShoppingList.getListName().isBlank() && !isListInMap(user.getId(), localShoppingList)) {
+                localShoppingList.setUserID(user.getId());
+                localShoppingList.setId(UUID.randomUUID().toString());
+                repository.save(localShoppingList);
+                LOG.info("Added List: " + localShoppingList);
+                this.shoppingList.put(localShoppingList.getId(), localShoppingList);
             }
-        }
         return repository.findAllByUserID(user.getId());
     }
 
@@ -84,7 +77,7 @@ public class ListService {
 
 
     public List<Item> changeItem(Principal principal, String listName, String itemID, String newItemName) {
-        if (principal == null) return null;
+        if (principal == null) return List.of();
         if (!(itemID.isBlank() || newItemName.isBlank())) {
             ShoppingList list = repository.findByUserIDAndListName(getUserID(principal), listName);
             List<Item> items = list.getItems();
@@ -95,8 +88,6 @@ public class ListService {
                         .findFirst()
                         .ifPresentOrElse(item ->
                                 item.setItemName(newItemName), null);
-
-//                tempItem.ifPresent(item -> item.setItemName(newItemName));
 
                 list.setItems(items);
                 repository.save(list);
@@ -111,20 +102,20 @@ public class ListService {
                 .filter(sList -> sList.getListName().equals(listName))
                 .findFirst();
 
-        return temp.map(ShoppingList::getItems).orElse(null);
+        return temp.map(ShoppingList::getItems).orElse(List.of());
 
     }
 
 
     public List<Item> getItems(Principal principal, String list) {
-        if (principal == null) return null;
+        if (principal == null) return List.of();
         return repository.findByUserIDAndListName(getUserID(principal), list).getItems();
     }
 
     public List<Item> addItem(Principal principal, String list, Item newItem) {
-        if (principal == null) return null;
+        if (principal == null) return List.of();
         ShoppingList tempList = repository.findByUserIDAndListName(getUserID(principal), list);
-        System.out.println("New Item:" + newItem);
+        LOG.info("New Item:" + newItem);
         List<Item> tempItems = tempList.getItems();
 
         if (tempItems.contains(newItem)) {
@@ -142,7 +133,7 @@ public class ListService {
     }
 
     public List<Item> deleteItem(Principal principal, String list, String itemID, boolean wholeItem) {
-        if (principal == null) return null;
+        if (principal == null) return List.of();
         ShoppingList tempList = repository.findByUserIDAndListName(getUserID(principal), list);
         List<Item> tempListItems = tempList.getItems();
 

@@ -21,11 +21,11 @@ export default function LoginPage(props: { controller: ILoginController }) {
         event.preventDefault()
         const form = event.currentTarget
         const formElements = form.elements as typeof form.elements & ITextInput
-        const username: string = formElements.username.value.trim()
-        const password: string = formElements.password.value.trim()
+        const formUsername: string = formElements.username.value.trim()
+        const formPassword: string = formElements.password.value.trim()
 
-        if ((username && username.length > 0) && (password && password.length > 0)) {
-            controller.login(username, password)
+        if ((formUsername && formUsername.length > 0) && (formPassword && formPassword.length > 0)) {
+            controller.login(formUsername, formPassword)
                 .then(token => {
                     setJwt(token)
                     navigate("/lists")

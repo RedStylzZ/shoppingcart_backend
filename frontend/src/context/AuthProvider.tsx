@@ -10,7 +10,7 @@ export interface IAuthContext {
 
 export const AuthContext = createContext<IAuthContext>({
     setJwt: () => {
-        throw "Login not initialized"
+        throw new Error("Login not initialized")
     }
 })
 

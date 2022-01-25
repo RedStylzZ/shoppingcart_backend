@@ -1,9 +1,6 @@
 import React, {FormEvent} from "react";
 
 export const TOKEN_KEY: string = "shopping_token"
-// export const apiURL: string = process.env.NODE_ENV === "development" ? "http://localhost:8080/api" : "/api"
-
-// export type IItem = [string, number]
 export interface IItem {
     id?: string,
     itemName: string,
@@ -46,7 +43,7 @@ export interface IList {
 export type IListSetter = React.Dispatch<React.SetStateAction<IList[]>>
 export type IItemSetter = React.Dispatch<React.SetStateAction<IItem[]>>
 export type ITokenSetter = React.Dispatch<React.SetStateAction<string | null>>
-export type IToken = string | null
+
 export interface IListController {
     getLists: () => Promise<IList[]> | void
     addList: (listName: string) => Promise<IList[]> | void

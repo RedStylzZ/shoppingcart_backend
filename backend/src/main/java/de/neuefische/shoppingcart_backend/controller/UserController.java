@@ -1,6 +1,7 @@
 package de.neuefische.shoppingcart_backend.controller;
 
 import de.neuefische.shoppingcart_backend.model.MongoUser;
+import de.neuefische.shoppingcart_backend.model.MongoUserDTO;
 import de.neuefische.shoppingcart_backend.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +18,13 @@ public class UserController {
     }
 
     @PutMapping()
-    public String addUser(Principal principal, @RequestBody MongoUser user) {
-        return service.addUser(principal, user);
+    public String addUser(Principal principal, @RequestBody MongoUserDTO user) {
+        MongoUser mongoUser = MongoUser.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .password(user.getPassword())
+                .build();
+        return service.addUser(principal, mongoUser);
     }
 
 }

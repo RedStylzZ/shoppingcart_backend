@@ -1,6 +1,7 @@
 package de.neuefische.shoppingcart_backend.controller;
 
 import de.neuefische.shoppingcart_backend.model.ShoppingList;
+import de.neuefische.shoppingcart_backend.model.ShoppingListDTO;
 import de.neuefische.shoppingcart_backend.service.ListService;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +24,7 @@ public class ListController {
     }
 
     @PutMapping()
-    public List<ShoppingList> addShoppingList(Principal principal, @RequestBody ShoppingList shoppingList) {
+    public List<ShoppingList> addShoppingList(Principal principal, @RequestBody ShoppingListDTO shoppingList) {
         return service.addShoppingList(principal, shoppingList);
     }
 
