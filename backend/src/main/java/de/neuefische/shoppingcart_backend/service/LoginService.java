@@ -1,7 +1,6 @@
 package de.neuefische.shoppingcart_backend.service;
 
 import de.neuefische.shoppingcart_backend.model.MongoUser;
-import de.neuefische.shoppingcart_backend.model.MongoUserDTO;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
 import org.springframework.http.HttpStatus;
@@ -14,8 +13,6 @@ import org.springframework.web.server.ResponseStatusException;
 @Service
 public class LoginService {
     private static final Log LOG = LogFactory.getLog(LoginService.class);
-
-
     private final AuthenticationManager authenticationManager;
     private final JWTService jwtService;
 
@@ -24,17 +21,12 @@ public class LoginService {
         this.jwtService = jwtService;
     }
 
-    public String login(MongoUserDTO user) {
+    public String login(MongoUser user) {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
             );
-            return jwtService.createToken(MongoUser.builder()
-                    .id(user.getId())
-                    .username(user.getUsername())
-                    .password(user.getPassword())
-                    .build()
-            );
+            return jwtService.createToken(user);
         } catch (AuthenticationException e) {
             LOG.warn("Login Exception:", e);
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid credentials");

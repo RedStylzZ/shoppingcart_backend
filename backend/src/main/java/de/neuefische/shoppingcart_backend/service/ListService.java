@@ -3,7 +3,7 @@ package de.neuefische.shoppingcart_backend.service;
 import de.neuefische.shoppingcart_backend.model.Item;
 import de.neuefische.shoppingcart_backend.model.MongoUser;
 import de.neuefische.shoppingcart_backend.model.ShoppingList;
-import de.neuefische.shoppingcart_backend.model.ShoppingListDTO;
+import de.neuefische.shoppingcart_backend.model.dto.ShoppingListDTO;
 import de.neuefische.shoppingcart_backend.repository.IShoppingListRepository;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;

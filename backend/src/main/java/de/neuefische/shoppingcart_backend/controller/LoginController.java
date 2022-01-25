@@ -1,7 +1,7 @@
 package de.neuefische.shoppingcart_backend.controller;
 
 import de.neuefische.shoppingcart_backend.model.MongoUser;
-import de.neuefische.shoppingcart_backend.model.MongoUserDTO;
+import de.neuefische.shoppingcart_backend.model.dto.MongoUserDTO;
 import de.neuefische.shoppingcart_backend.service.LoginService;
 import de.neuefische.shoppingcart_backend.service.MongoUserDetailsService;
 import de.neuefische.shoppingcart_backend.service.UserService;
@@ -39,7 +39,11 @@ public class LoginController {
 
     @PostMapping
     public String login(@RequestBody MongoUserDTO user) {
-        return service.login(user);
+        MongoUser mongoUser = MongoUser.builder()
+                .username(user.getUsername())
+                .password(user.getPassword())
+                .build();
+        return service.login(mongoUser);
     }
 
 

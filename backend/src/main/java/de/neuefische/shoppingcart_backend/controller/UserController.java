@@ -1,7 +1,7 @@
 package de.neuefische.shoppingcart_backend.controller;
 
 import de.neuefische.shoppingcart_backend.model.MongoUser;
-import de.neuefische.shoppingcart_backend.model.MongoUserDTO;
+import de.neuefische.shoppingcart_backend.model.dto.MongoUserDTO;
 import de.neuefische.shoppingcart_backend.service.UserService;
 import org.springframework.web.bind.annotation.*;
 

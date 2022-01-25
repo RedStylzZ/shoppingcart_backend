@@ -1,7 +1,7 @@
 package de.neuefische.shoppingcart_backend.controller;
 
 import de.neuefische.shoppingcart_backend.model.ShoppingList;
-import de.neuefische.shoppingcart_backend.model.ShoppingListDTO;
+import de.neuefische.shoppingcart_backend.model.dto.ShoppingListDTO;
 import de.neuefische.shoppingcart_backend.service.ListService;
 import org.springframework.web.bind.annotation.*;
 

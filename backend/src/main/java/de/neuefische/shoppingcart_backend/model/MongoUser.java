@@ -34,6 +34,7 @@ public class MongoUser implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (this.rights == null) return List.of();
         return this.rights.stream()
                 .map(SimpleGrantedAuthority::new)
                 .toList();

@@ -1,5 +1,6 @@
-package de.neuefische.shoppingcart_backend.model;
+package de.neuefische.shoppingcart_backend.model.dto;
 
+import de.neuefische.shoppingcart_backend.model.Item;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
