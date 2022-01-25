@@ -11,6 +11,5 @@ public class MongoUserDTO {
     String id;
     String username;
     String password;
-
 }
 
