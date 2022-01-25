@@ -40,7 +40,7 @@ export default function ItemsPage() {
             const textInputValue: string = formElements.textInput.value
             textInputValue.length > 100 ?
                 alert("Maximum 100 characters allowed") :
-                controller.addItem(listName, textInputValue, quantityState)
+                controller.addItem(listName, textInputValue, quantityState).then(setItems)
             // @ts-ignore
             event.currentTarget.elements.textInput.value = ""
         }
