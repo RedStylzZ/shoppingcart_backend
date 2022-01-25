@@ -1,9 +1,9 @@
 import {IItemController, ITokenConfig} from "../models/ShoppingItems";
-import ItemAPIController from "./ItemAPIController";
+import ItemService from "../services/ItemService";
 
 export default function ItemController(config?: ITokenConfig,): IItemController {
 
-    const apiController = ItemAPIController(config!);
+    const apiController = ItemService(config!);
 
     return {
         getItems: (listName) => {

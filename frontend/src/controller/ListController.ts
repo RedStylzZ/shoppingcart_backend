@@ -1,9 +1,9 @@
 import {IListController, IListSetter, ITokenConfig} from "../models/ShoppingItems";
-import ListAPIController from "./ListAPIController";
+import ListService from "../services/ListService";
 
 export default function ListController(setter: IListSetter, config?: ITokenConfig): IListController {
 
-    const apiController = ListAPIController(config!)
+    const apiController = ListService(config!)
 
     return {
         getLists: () => {

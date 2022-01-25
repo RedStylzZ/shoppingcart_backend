@@ -1,9 +1,9 @@
 import {ILoginController} from "../models/ShoppingItems";
-import LoginAPIController from "./LoginAPIController";
+import LoginService from "../services/LoginService";
 
 export default function LoginController(): ILoginController {
 
-    const apiController = LoginAPIController()
+    const apiController = LoginService()
 
     return {
         login: (username, password) => {
