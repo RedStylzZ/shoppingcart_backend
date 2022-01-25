@@ -1,21 +1,21 @@
 .listCard {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  gap: 0;
-  justify-content: space-evenly;
-  width: 25rem;
-  //height: 100%;
-  background: #1c1e20;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 0;
+    justify-content: space-evenly;
+    width: 25rem;
+    //height: 100%;
+    background: #1c1e20;
 
-  .listCardLink {
-    width: 100%;
-    color: purple;
-    text-decoration: none;
-  }
+    .listCardLink {
+        width: 100%;
+        color: purple;
+        text-decoration: none;
+    }
 }
 
 i {
-  margin-bottom: .5rem;
-  font-size: 1.25rem;
+    margin-bottom: .5rem;
+    font-size: 1.25rem;
 }

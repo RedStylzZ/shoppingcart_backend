@@ -1,6 +1,7 @@
 import React, {FormEvent} from "react";
 
 export const TOKEN_KEY: string = "shopping_token"
+
 export interface IItem {
     id?: string,
     itemName: string,
@@ -8,7 +9,7 @@ export interface IItem {
 }
 
 export interface ITokenConfig {
-    headers: {'Authorization': string}
+    headers: { 'Authorization': string }
 }
 
 export type addItemsFunc = (event: FormEvent<HTMLFormElement> | IItem) => void

@@ -12,29 +12,29 @@ import RequireAuth from "./components/RequireAuth";
 export default function App() {
     return (
         <div className="App">
-            <AuthProvider >
+            <AuthProvider>
                 <BrowserRouter>
                     <NavBar/>
                     <Routes>
                         <Route path={"*"}
                                element={
                                    <RequireAuth>
-                                       <ListsPage />
+                                       <ListsPage/>
                                    </RequireAuth>
                                }/>
                         <Route path={"/lists/:name"}
                                element={
                                    <RequireAuth>
-                                       <ItemsPage />
+                                       <ItemsPage/>
                                    </RequireAuth>
                                }/>
                         <Route path={"/changeItem/:listName/:id"}
                                element={
                                    <RequireAuth>
-                                       <ChangeItem />
+                                       <ChangeItem/>
                                    </RequireAuth>
                                }/>
-                        <Route path={"/login"} element={<LoginPage />}/>
+                        <Route path={"/login"} element={<LoginPage/>}/>
                     </Routes>
                 </BrowserRouter>
             </AuthProvider>

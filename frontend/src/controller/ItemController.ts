@@ -1,9 +1,7 @@
-import {
-    IItemController, ITokenConfig
-} from "../models/ShoppingItems";
+import {IItemController, ITokenConfig} from "../models/ShoppingItems";
 import ItemAPIController from "./ItemAPIController";
 
-export default function ItemController(config?: ITokenConfig, ): IItemController {
+export default function ItemController(config?: ITokenConfig,): IItemController {
 
     const apiController = ItemAPIController(config!);
 

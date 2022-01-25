@@ -1,26 +1,26 @@
 .App {
-  text-align: center;
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  /*align-items: center;*/
-  /*justify-content: center;*/
-  /*font-size: calc(10px + 2vmin);*/
-  color: white;
+    text-align: center;
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    /*align-items: center;*/
+    /*justify-content: center;*/
+    /*font-size: calc(10px + 2vmin);*/
+    color: white;
 }
 
 body {
-  background-color: #282c34;
+    background-color: #282c34;
 }
 
 .Outer {
-  display: flex;
-  gap: 1rem;
-  flex-flow: column wrap;
-  align-items: center;
-  justify-content: center;
-  width: 25%;
-  /*background: darkred;*/
+    display: flex;
+    gap: 1rem;
+    flex-flow: column wrap;
+    align-items: center;
+    justify-content: center;
+    width: 25%;
+    /*background: darkred;*/
 }
