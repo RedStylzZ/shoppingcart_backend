@@ -3,7 +3,6 @@ package de.neuefische.shoppingcart_backend.service;
 import de.neuefische.shoppingcart_backend.model.Item;
 import de.neuefische.shoppingcart_backend.model.MongoUser;
 import de.neuefische.shoppingcart_backend.model.ShoppingList;
-import de.neuefische.shoppingcart_backend.model.dto.ShoppingListDTO;
 import de.neuefische.shoppingcart_backend.repository.IShoppingListRepository;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
@@ -46,14 +45,8 @@ public class ListService {
         return List.of();
     }
 
-    public List<ShoppingList> addShoppingList(Principal principal, ShoppingListDTO shoppingListDTO) {
+    public List<ShoppingList> addShoppingList(Principal principal, ShoppingList localShoppingList) {
         if (principal == null) return List.of();
-        ShoppingList localShoppingList = ShoppingList.builder()
-                .id(shoppingListDTO.getId())
-                .listName(shoppingListDTO.getListName())
-                .items(shoppingListDTO.getItems())
-                .userID(shoppingListDTO.getUserID())
-                .build();
 
         MongoUser user = mongoService.loadUserByUsername(principal.getName());
         if (!localShoppingList.getListName().isBlank() && !isListInMap(user.getId(), localShoppingList)) {

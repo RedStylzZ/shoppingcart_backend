@@ -24,7 +24,8 @@ public class ListController {
     }
 
     @PutMapping()
-    public List<ShoppingList> addShoppingList(Principal principal, @RequestBody ShoppingListDTO shoppingList) {
+    public List<ShoppingList> addShoppingList(@RequestBody ShoppingListDTO shoppingListDTO, Principal principal) {
+        ShoppingList shoppingList = ShoppingList.convertDTOtoShoppingList(shoppingListDTO);
         return service.addShoppingList(principal, shoppingList);
     }
 

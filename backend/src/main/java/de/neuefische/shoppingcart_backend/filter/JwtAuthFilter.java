@@ -2,6 +2,7 @@ package de.neuefische.shoppingcart_backend.filter;
 
 import de.neuefische.shoppingcart_backend.service.JWTService;
 import de.neuefische.shoppingcart_backend.service.MongoUserDetailsService;
+import io.jsonwebtoken.ExpiredJwtException;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
 import org.springframework.http.HttpHeaders;
@@ -35,7 +36,15 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String token = getToken(request);
         LOG.info("JWTAuthFilter Token: " + token);
-        String username = ((token != null) && !(token.equals("undefined")) && (!token.isBlank())) ? jwtService.extractUsername(token) : null;
+        String username = null;
+
+        if ((token != null) && !(token.equals("undefined")) && (!token.isBlank())) {
+            try {
+                username = jwtService.extractUsername(token);
+            } catch (ExpiredJwtException e) {
+                LOG.error("Token expired", e);
+            }
+        }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) try {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
@@ -47,7 +56,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
         } catch (Exception e) {
-            LOG.error("ERROR while parsing token:", e);
+            LOG.error("ERROR while parsing token: ", e);
         }
         filterChain.doFilter(request, response);
     }
