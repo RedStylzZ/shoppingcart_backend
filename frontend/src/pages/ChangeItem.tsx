@@ -1,9 +1,11 @@
 import {useNavigate, useParams} from "react-router-dom";
 import React, {FormEvent} from "react";
-import {IItemController} from "../models/ShoppingItems";
+import {IItemController, TOKEN_KEY} from "../models/ShoppingItems";
+import ItemController from "../controller/ItemController";
 
-export default function ChangeItem(props: {controller: IItemController}) {
-    const {controller} = props
+export default function ChangeItem() {
+    const config = {headers: {Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`}}
+    const controller: IItemController = ItemController(config)
     const navigate = useNavigate()
     const params = useParams()
     const itemID: string = params.id!
@@ -18,7 +20,7 @@ export default function ChangeItem(props: {controller: IItemController}) {
         const form = event.currentTarget
         const formElements = form.elements as typeof form.elements & ITextInput
         const textInput: string = formElements.textInput.value.trim()
-        controller.changeItem(listName, itemID, textInput)
+        controller.changeItem(listName, itemID, textInput).then(() => navigate(`/lists/${listName}`))
         navigate(`/lists/${listName}`)
     }
 

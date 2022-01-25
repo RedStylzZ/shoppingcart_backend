@@ -14,7 +14,7 @@ export const AuthContext = createContext<IAuthContext>({
     }
 })
 
-export default function AuthProvider({children, setConfig}: { children: ReactElement<any, any>, setConfig: React.Dispatch<React.SetStateAction<any>>}) {
+export default function AuthProvider({children}: { children: ReactElement<any, any> }) {
 
     const [token, setToken] = useState<string>(localStorage.getItem(TOKEN_KEY) || "")
     const [jwtDecoded, setJwtDecoded] = useState({})
@@ -23,7 +23,6 @@ export default function AuthProvider({children, setConfig}: { children: ReactEle
         if (token !== "") {
             localStorage.setItem(TOKEN_KEY, token)
         }
-        setConfig({headers: {Authorization: `Bearer ${token}`}})
     }, [token])
 
     const setJwt = (jwt: string) => {

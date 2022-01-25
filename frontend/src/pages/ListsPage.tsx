@@ -1,13 +1,17 @@
-import {IList, IListController} from "../models/ShoppingItems";
-import {FormEventHandler, useEffect} from "react";
+import {IList, IListController, TOKEN_KEY} from "../models/ShoppingItems";
+import {FormEventHandler, useEffect, useState} from "react";
 import Lists from "../components/Lists";
 import './ListsPage.scss'
+import ListController from "../controller/ListController";
 
-export default function ListsPage(props: { controller: IListController, lists: IList[]}) {
-    const {controller, lists} = props
+export default function ListsPage() {
+    const [lists, setLists] = useState<IList[]>([])
+    const config = {headers: {Authorization: `Bearer ${localStorage.getItem(TOKEN_KEY)}`}}
+    const controller: IListController = ListController(setLists, config)
 
     useEffect(() => {
         controller.getLists()
+        //eslint-disable-next-line
     }, [])
 
     const addList: FormEventHandler<HTMLFormElement> = (event) => {

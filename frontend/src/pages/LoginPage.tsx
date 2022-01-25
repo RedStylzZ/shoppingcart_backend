@@ -2,14 +2,15 @@ import {ILoginController,} from "../models/ShoppingItems";
 import React, {ChangeEvent, FormEvent, useContext, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {AuthContext} from "../context/AuthProvider";
+import LoginController from "../controller/LoginController";
 
 interface ITextInput {
     username: { value: string }
     password: { value: string }
 }
 
-export default function LoginPage(props: { controller: ILoginController }) {
-    const {controller} = props
+export default function LoginPage() {
+    const controller: ILoginController = LoginController()
     const navigate = useNavigate()
 
     const [name, setName] = useState<string>("")

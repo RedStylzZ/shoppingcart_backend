@@ -24,10 +24,10 @@ export interface ItemsProps {
 }
 
 export interface IItemController {
-    getItems: (listName: string) => Promise<IItem[]> | void,
-    addItem: (listName: string, newItem: string, quantity: number) => Promise<IItem[]> | void,
-    removeItem: (listName: string, itemID: string, wholeItem: boolean) => Promise<IItem[]> | void,
-    changeItem: (listName: string, itemID: string, newName: string) => Promise<IItem[]> | void
+    getItems: (listName: string) => Promise<IItem[]>,
+    addItem: (listName: string, newItem: string, quantity: number) => Promise<IItem[]>,
+    removeItem: (listName: string, itemID: string, wholeItem: boolean) => Promise<IItem[]>,
+    changeItem: (listName: string, itemID: string, newName: string) => Promise<IItem[]>
 }
 
 export interface ILoginController {
