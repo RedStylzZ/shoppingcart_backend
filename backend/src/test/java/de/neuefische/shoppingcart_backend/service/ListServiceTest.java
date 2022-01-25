@@ -1,8 +1,9 @@
 package de.neuefische.shoppingcart_backend.service;
 
-import de.neuefische.shoppingcart_backend.model.MongoUser;
 import de.neuefische.shoppingcart_backend.repository.IShoppingListRepository;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -14,7 +15,7 @@ class ListServiceTest {
     @Test
     void testTest() {
         ListService service = new ListService(shoppingListRepository, mongoService);
-        assertNull(service.getItems(null, "Meep"));
+        assertEquals(List.of(), service.getItems(null, "Meep"));
     }
 
 }
