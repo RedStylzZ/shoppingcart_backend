@@ -28,7 +28,7 @@ public class LoginService {
             );
             return jwtService.createToken(user);
         } catch (AuthenticationException e) {
-            LOG.warn("Login Exception:", e);
+            LOG.warn("Login invalid credentials: " + e.getMessage());
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid credentials");
         }
     }

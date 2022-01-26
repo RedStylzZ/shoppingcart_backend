@@ -29,7 +29,7 @@ public class JWTService {
     }
 
     public Boolean validateToken(String token, String username) {
-        LOG.info("JWTService Token:" + token);
+        LOG.trace("Validating Token for user: " + username);
         return (!token.isBlank() && extractUsername(token).equals(username) && !isTokenExpired(token));
     }
 

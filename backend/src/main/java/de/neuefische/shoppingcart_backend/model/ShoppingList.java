@@ -25,8 +25,8 @@ public class ShoppingList {
     @Transient
     public static ShoppingList convertDTOtoShoppingList(ShoppingListDTO dto) {
         return ShoppingList.builder()
-                .listName(dto.getListName())
-                .items(dto.getItems())
+                .listName(dto.listName())
+                .items(dto.items())
                 .build();
     }
 }
