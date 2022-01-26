@@ -1,4 +1,4 @@
-package de.neuefische.shoppingcart_backend.model;
+package de.neuefische.shoppingcart_backend.config;
 
 import org.springdoc.core.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;

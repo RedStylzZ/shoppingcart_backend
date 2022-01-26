@@ -1,9 +1,13 @@
-import {IListController, IListSetter} from "../models/ShoppingItems";
+import {IListController, IListSetter, ITokenConfig} from "../models/ShoppingItems";
+import ListService from "../services/ListService";
 
-export default function ListController(apiController: IListController, setter: IListSetter): IListController {
+export default function ListController(setter: IListSetter, config?: ITokenConfig): IListController {
+
+    const apiController = ListService(config!)
+
     return {
         getLists: () => {
-            apiController.getLists()!.then(setter)
+            apiController.getLists()!.then(setter).catch(() => console.error("Error"))
         },
         addList(listName) {
             apiController.addList(listName)!.then(setter)
@@ -11,5 +15,5 @@ export default function ListController(apiController: IListController, setter: I
         removeList(listName) {
             apiController.removeList(listName)!.then(setter)
         }
-    }
+    };
 }

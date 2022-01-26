@@ -1,22 +1,22 @@
-import {
-    IItemSetter,
-    IItemController
-} from "../models/ShoppingItems";
+import {IItemController, ITokenConfig} from "../models/ShoppingItems";
+import ItemService from "../services/ItemService";
 
-export default function ItemController(apiController: IItemController, setter: IItemSetter): IItemController {
+export default function ItemController(config?: ITokenConfig,): IItemController {
+
+    const apiController = ItemService(config!);
 
     return {
         getItems: (listName) => {
-            apiController.getItems(listName)!.then(setter)
+            return apiController.getItems(listName)
         },
         addItem(listName, newItem, quantity) {
-            apiController.addItem(listName, newItem, quantity)!.then(setter)
+            return apiController.addItem(listName, newItem, quantity)
         },
         changeItem(listName, itemID, newName) {
-            apiController.changeItem(listName, itemID, newName)!.then(setter)
+            return apiController.changeItem(listName, itemID, newName)
         },
         removeItem(listName, itemID, wholeItem) {
-            apiController.removeItem(listName, itemID, wholeItem)!.then(setter)
+            return apiController.removeItem(listName, itemID, wholeItem)
         }
     }
 

@@ -1,11 +1,11 @@
 package de.neuefische.shoppingcart_backend.model;
 
+import de.neuefische.shoppingcart_backend.model.dto.ShoppingListDTO;
 import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -18,6 +18,15 @@ public class ShoppingList {
     @Id
     String id;
 
-    @NonNull String listName;
-    @NonNull List<Item> items;
+    String userID;
+    String listName;
+    List<Item> items;
+
+    @Transient
+    public static ShoppingList convertDTOtoShoppingList(ShoppingListDTO dto) {
+        return ShoppingList.builder()
+                .listName(dto.listName())
+                .items(dto.items())
+                .build();
+    }
 }
