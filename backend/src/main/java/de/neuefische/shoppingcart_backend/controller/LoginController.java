@@ -3,7 +3,6 @@ package de.neuefische.shoppingcart_backend.controller;
 import de.neuefische.shoppingcart_backend.model.MongoUser;
 import de.neuefische.shoppingcart_backend.model.dto.MongoUserDTO;
 import de.neuefische.shoppingcart_backend.service.LoginService;
-import de.neuefische.shoppingcart_backend.service.UserService;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("auth/login")
 public class LoginController {
-    private static final Log LOG = LogFactory.getLog(UserService.class);
+    private static final Log LOG = LogFactory.getLog(LoginController.class);
     private final LoginService service;
 
     public LoginController(LoginService service) {
@@ -22,13 +21,15 @@ public class LoginController {
     }
 
     @PostMapping
-    public String login(@RequestBody MongoUserDTO user) {
-        MongoUser mongoUser = MongoUser.builder()
-                .username(user.getUsername())
-                .password(user.getPassword())
-                .build();
-        LOG.trace("Logging in user: " + mongoUser.getPassword());
-        return service.login(mongoUser);
+    public String login(@RequestBody MongoUserDTO dto) {
+        try {
+            MongoUser mongoUser = MongoUser.dtoToUser(dto);
+            LOG.info("Logging in user: " + mongoUser.getPassword());
+            return service.login(mongoUser);
+        } catch (Exception e) {
+            LOG.error("Failed to create user", e);
+        }
+        return null;
     }
 
 

@@ -54,6 +54,8 @@ public class UserService {
                     LOG.info("Added new User: " + newUser);
                     return jwtService.createToken(newUser);
                 }
+            } else {
+                LOG.warn("Principal is null");
             }
         } catch (Exception e) {
             LOG.warn("Add Account Exception:", e);

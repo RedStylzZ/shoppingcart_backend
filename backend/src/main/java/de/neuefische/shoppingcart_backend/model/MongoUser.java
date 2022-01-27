@@ -1,5 +1,6 @@
 package de.neuefische.shoppingcart_backend.model;
 
+import de.neuefische.shoppingcart_backend.model.dto.MongoUserDTO;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
@@ -35,6 +36,13 @@ public class MongoUser implements UserDetails {
         return this.rights.stream()
                 .map(SimpleGrantedAuthority::new)
                 .toList();
+    }
+
+    public static MongoUser dtoToUser(MongoUserDTO dto) {
+        return MongoUser.builder()
+                .username(dto.getUsername())
+                .password(dto.getPassword())
+                .build();
     }
 
 }

@@ -11,9 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class MongoUserDetailsService implements UserDetailsService {
 
-    private static final Log LOG = LogFactory.getLog(LoginService.class);
-
-    public static final String AUTHORITY_API_READWRITE = "API_READWRITE";
+    private static final Log LOG = LogFactory.getLog(MongoUserDetailsService.class);
     public static final String ROLE_ADMIN = "ADMIN";
 
     private final IMongoUserRepository repository;
@@ -25,10 +23,12 @@ public class MongoUserDetailsService implements UserDetailsService {
     @Override
     public MongoUser loadUserByUsername(String username) throws UsernameNotFoundException {
         MongoUser user = repository.findMongoUserByUsername(username);
-        LOG.info("MongoUserDetailsService: " + user);
+        LOG.debug("Fetching user: " + username);
         if (user == null) {
+            LOG.warn("Could not find user: " + username);
             throw new UsernameNotFoundException("User not found");
         }
+        LOG.debug("Found user: " + user);
         return user;
     }
 }

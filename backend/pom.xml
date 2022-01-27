@@ -76,6 +76,9 @@
     </dependencies>
 
     <build>
+        <finalName>
+            shopping-cart
+        </finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

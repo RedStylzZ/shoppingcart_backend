@@ -26,6 +26,7 @@ public class LoginService {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword())
             );
+            LOG.info("Successfully logged in user: " + user.getUsername());
             return jwtService.createToken(user);
         } catch (AuthenticationException e) {
             LOG.warn("Login invalid credentials: " + e.getMessage());
