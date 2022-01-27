@@ -42,7 +42,7 @@ jobs:
         run: mvn -B package --file backend/pom.xml
       - uses: actions/upload-artifact@v2
         with:
-          name: template.jar #Must be the same as 'finalName' in pom.xml
+          name: shopping-cart.jar #Must be the same as 'finalName' in pom.xml
           path: backend/target/template.jar
 
   deploy-heroku:
