@@ -62,6 +62,6 @@ jobs:
       - name: Login to heroku
         run: heroku container:login
       - name: Push docker container
-        run: heroku container:push web -a shopping-cart #Change with your heroku-app name
+        run: heroku container:push web -a shopcartbackendapi #Change with your heroku-app name
       - name: Deploy docker container
-        run: heroku container:release web -a shopping-cart #Change with your heroku-app name
+        run: heroku container:release web -a shopcartbackendapi #Change with your heroku-app name
